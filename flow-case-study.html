@@ -4,267 +4,226 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flow — Fintech Case Study · Sarvani Vulavalapudi</title>
-  <meta name="description" content="Case study: Flow, a conversational personal finance app designed for young professionals who find traditional budgeting tools cold and overwhelming." />
+  <meta name="description" content="Case study: Flow, a conversational personal finance app for young professionals." />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── CASE STUDY OVERRIDES ── */
-    .cs-hero {
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 60%, #C7F3EB 100%);
-      padding: 6rem 2rem 4rem;
-    }
-    .cs-hero-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      width: 100%;
-    }
+    /* ── CASE STUDY BASE ── */
     .cs-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-decoration: none;
-      margin-bottom: 2rem;
-      transition: color 0.2s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 80px; left: 2rem; z-index: 10;
     }
     .cs-back:hover { color: var(--accent); }
-    .cs-hero-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+
+    /* ── HERO ── */
+    .cs-hero {
+      min-height: 82vh;
+      background: linear-gradient(145deg, #dbeafe 0%, #bfdbfe 40%, #c7f3eb 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 7rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cs-hero-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.2rem; }
     .cs-tag {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.75rem;
-      border-radius: 99px;
-      background: rgba(20,184,166,0.15);
-      color: var(--accent-dark);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.8rem; border-radius: 99px;
+      background: rgba(20,184,166,0.18); color: var(--accent-dark);
     }
     .cs-hero h1 {
       font-family: 'Sora', sans-serif;
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      line-height: 1.15;
-      margin-bottom: 1rem;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      color: var(--text); line-height: 1.15; margin-bottom: 0.8rem;
     }
-    .cs-hero p {
-      font-size: 1.125rem;
-      color: var(--text-muted);
-      max-width: 580px;
-      line-height: 1.7;
+    .cs-hero-sub {
+      font-size: 1.05rem; color: var(--text-muted);
+      max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.65;
     }
+
+    /* 3 floating phones in hero */
+    .cs-hero-phones {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 1.2rem; width: 100%; max-width: 640px; margin: 0 auto;
+    }
+    .cs-hero-phone {
+      background: #1a1a1a; border-radius: 28px;
+      overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+      flex-shrink: 0;
+    }
+    .cs-hero-phone.center { width: 175px; transform: translateY(-20px); z-index: 2; }
+    .cs-hero-phone.side   { width: 148px; opacity: 0.85; }
+    .cs-hero-phone img { width: 100%; display: block; }
 
     /* ── META BAR ── */
     .cs-meta-bar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem 2rem;
+      background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.4rem 2rem;
     }
     .cs-meta-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1.5rem;
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.2rem;
     }
     .cs-meta-item label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
+      display: block; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem;
     }
-    .cs-meta-item span {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text);
-    }
+    .cs-meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text); }
 
-    /* ── BODY ── */
-    .cs-body {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
+    /* ── SECTION WRAPPER ── */
+    .cs-section {
+      max-width: 800px; margin: 0 auto; padding: 3.5rem 2rem 0;
     }
-    .cs-section { margin-bottom: 4rem; }
     .cs-section h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.6rem;
     }
     .cs-section h2::before {
-      content: '';
-      display: inline-block;
-      width: 3px;
-      height: 1.2em;
-      background: var(--accent);
-      border-radius: 2px;
-      flex-shrink: 0;
+      content: ''; display: inline-block; width: 3px; height: 1.1em;
+      background: var(--accent); border-radius: 2px; flex-shrink: 0;
     }
-    .cs-section p {
-      color: var(--text-muted);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-    }
+    .cs-section p { color: var(--text-muted); line-height: 1.75; margin-bottom: 0.6rem; font-size: 0.95rem; }
     .cs-section p:last-child { margin-bottom: 0; }
     .cs-section strong { color: var(--text); font-weight: 600; }
 
-    /* ── CALLOUT BOX ── */
-    .cs-callout {
-      background: var(--accent-light);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1.2rem 1.4rem;
-      margin: 1.5rem 0;
+    /* ── USER CHIPS ── */
+    .cs-chips { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem; }
+    .cs-chip {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1rem; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--surface);
+      font-size: 0.84rem; color: var(--text); font-weight: 500;
     }
-    .cs-callout p {
-      margin: 0;
-      color: var(--text);
-      font-style: italic;
+    .cs-chip-icon { font-size: 1.1rem; }
+
+    /* ── FULL-WIDTH GALLERY ── */
+    .cs-gallery-wrap {
+      background: #f0f9ff;
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+    }
+    .cs-gallery-label {
+      max-width: var(--max); margin: 0 auto 1.6rem;
+      font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+    }
+    .cs-gallery-title {
+      max-width: var(--max); margin: 0 auto 0.5rem;
+      font-family: 'Sora', sans-serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--text); letter-spacing: -0.02em;
+    }
+    .cs-gallery-desc {
+      max-width: var(--max); margin: 0 auto 2rem;
+      font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .cs-gallery {
+      max-width: var(--max); margin: 0 auto;
+      display: flex; gap: 1.2rem; overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+    }
+    .cs-gallery::-webkit-scrollbar { display: none; }
+    .cs-gallery-item { flex-shrink: 0; text-align: center; }
+    .cs-gallery-phone {
+      width: 160px;
+      background: #1a1a1a; border-radius: 24px; overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+      margin-bottom: 0.75rem;
+    }
+    .cs-gallery-phone img { width: 100%; display: block; }
+    .cs-gallery-caption {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
     }
 
-    /* ── PROCESS STEPS ── */
-    .cs-steps { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
-    .cs-step {
-      display: grid;
-      grid-template-columns: 2.5rem 1fr;
-      gap: 1rem;
-      align-items: start;
-    }
-    .cs-step-num {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background: var(--accent);
-      color: white;
-      font-family: 'Sora', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .cs-step-content h3 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
-    .cs-step-content p { margin: 0; font-size: 0.9rem; }
-
-    /* ── SCREEN SHOWCASE ── */
-    .cs-screens {
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f7f5 100%);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      margin: 2rem 0;
-    }
-    .cs-screens h3 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-    .cs-screens p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0; }
-    .cs-screen-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .cs-screen-item { text-align: center; }
-    .cs-screen-phone {
-      width: 100%;
-      max-width: 140px;
-      margin: 0 auto 0.6rem;
-      aspect-ratio: 9/19.5;
-      background: #1a1a1a;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.2);
-      position: relative;
-    }
-    .cs-screen-phone img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-    }
-    .cs-screen-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    /* ── DECISION CARDS ── */
-    .cs-decisions { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
-    .cs-decision {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.2rem 1.4rem;
+    /* ── FEATURE SECTION (light bg) ── */
+    .cs-feature-wrap {
       background: var(--surface);
+      padding: 3rem 2rem;
+      margin-top: 0;
+      border-top: 1px solid var(--border);
     }
-    .cs-decision h3 {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.5rem;
+    .cs-feature-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
     }
-    .cs-decision p { font-size: 0.9rem; margin: 0; }
+    .cs-feature-inner.flip { grid-template-columns: auto 1fr; }
+    .cs-feature-inner.flip .cs-feature-phone { order: -1; }
+    .cs-feature-text h3 {
+      font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.02em;
+    }
+    .cs-feature-text p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+    .cs-feature-phone {
+      width: 200px; background: #1a1a1a; border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-shrink: 0;
+    }
+    .cs-feature-phone img { width: 100%; display: block; }
+
+    /* ── PROCESS STRIP ── */
+    .cs-process-wrap {
+      background: var(--bg); padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .cs-process-inner { max-width: var(--max); margin: 0 auto; }
+    .cs-process-inner h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700;
+      color: var(--text); margin-bottom: 2rem; letter-spacing: -0.02em;
+    }
+    .cs-process-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--border); border-radius: var(--radius); overflow: hidden;
+    }
+    .cs-process-step {
+      background: var(--surface); padding: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .cs-process-num {
+      width: 2rem; height: 2rem; border-radius: 50%; background: var(--accent);
+      color: white; font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cs-process-step h4 {
+      font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 700;
+      color: var(--text); margin: 0;
+    }
+    .cs-process-step p { font-size: 0.8rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
 
     /* ── REFLECTION ── */
-    .cs-reflection {
-      background: #0f172a;
-      color: #e2e8f0;
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      margin-top: 2rem;
+    .cs-reflection-wrap {
+      background: #0f172a; padding: 3rem 2rem;
     }
-    .cs-reflection h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 1rem;
+    .cs-reflection-inner { max-width: 720px; margin: 0 auto; }
+    .cs-reflection-inner h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700;
+      color: white; margin-bottom: 1.5rem; letter-spacing: -0.02em;
     }
-    .cs-reflection p {
-      color: #94a3b8;
-      line-height: 1.8;
-      font-size: 0.95rem;
-      margin-bottom: 0.8rem;
+    .cs-reflection-bullets { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-reflection-bullet {
+      display: grid; grid-template-columns: 1.5rem 1fr; gap: 0.75rem;
     }
-    .cs-reflection p:last-child { margin-bottom: 0; }
-    .cs-reflection strong { color: #e2e8f0; }
+    .cs-reflection-bullet::before {
+      content: '→'; color: var(--accent); font-weight: 700; font-size: 0.9rem; margin-top: 0.05rem;
+    }
+    .cs-reflection-bullet p { font-size: 0.9rem; color: #94a3b8; line-height: 1.7; margin: 0; }
+    .cs-reflection-bullet strong { color: #e2e8f0; }
 
     /* ── CTA ── */
-    .cs-cta {
-      text-align: center;
-      padding: 3rem 2rem;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-    .cs-cta p { color: var(--text-muted); margin-bottom: 1.5rem; }
+    .cs-cta-wrap { padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); }
+    .cs-cta-wrap p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: 0.9rem; }
+    .cs-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
     @media (max-width: 640px) {
-      .cs-meta-inner { grid-template-columns: repeat(2, 1fr); }
-      .cs-screen-grid { grid-template-columns: repeat(3, 1fr); }
+      .cs-hero-phone.side { display: none; }
+      .cs-hero-phone.center { width: 200px; transform: none; }
+      .cs-feature-inner, .cs-feature-inner.flip {
+        grid-template-columns: 1fr; text-align: center;
+      }
+      .cs-feature-inner.flip .cs-feature-phone { order: 0; margin: 0 auto; }
+      .cs-feature-phone { margin: 0 auto; }
+      .cs-process-strip { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -283,245 +242,195 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <a class="cs-back" href="index.html">← Back</a>
+
+  <!-- ── HERO ── -->
   <div class="cs-hero">
-    <div class="cs-hero-inner">
-      <a class="cs-back" href="index.html">← Back to portfolio</a>
-      <div class="cs-hero-tags">
-        <span class="cs-tag">Fintech</span>
-        <span class="cs-tag">Mobile UI</span>
-        <span class="cs-tag">AI-Assisted</span>
-        <span class="cs-tag">Solo Project</span>
-        <span class="cs-tag">Concept</span>
+    <div class="cs-hero-tags">
+      <span class="cs-tag">Fintech</span>
+      <span class="cs-tag">Mobile UI</span>
+      <span class="cs-tag">Google Stitch + Claude</span>
+      <span class="cs-tag">Concept</span>
+    </div>
+    <h1>Flow — Personal Finance<br>That Feels Human</h1>
+    <p class="cs-hero-sub">A conversational budgeting app for young professionals who find money apps cold and overwhelming.</p>
+
+    <div class="cs-hero-phones">
+      <div class="cs-hero-phone side">
+        <img src="assets/flow-signup.png" alt="Flow sign up" />
       </div>
-      <h1>Flow — Personal Finance<br>That Doesn't Feel Like Finance</h1>
-      <p>A conversational budgeting app designed for young professionals who find traditional finance tools cold, overwhelming, and built for someone else.</p>
+      <div class="cs-hero-phone center">
+        <img src="assets/flow-dashboard.png" alt="Flow dashboard" />
+      </div>
+      <div class="cs-hero-phone side">
+        <img src="assets/flow-success.png" alt="Flow success" />
+      </div>
     </div>
   </div>
 
-  <!-- META BAR -->
+  <!-- ── META BAR ── -->
   <div class="cs-meta-bar">
     <div class="cs-meta-inner">
-      <div class="cs-meta-item">
-        <label>My Role</label>
-        <span>Solo UI/UX Designer</span>
+      <div class="cs-meta-item"><label>Role</label><span>Solo UI/UX Designer</span></div>
+      <div class="cs-meta-item"><label>Tools</label><span>Google Stitch · Figma · Claude</span></div>
+      <div class="cs-meta-item"><label>Platform</label><span>iOS Mobile</span></div>
+      <div class="cs-meta-item"><label>Status</label><span>Concept — no testing yet</span></div>
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ── -->
+  <div class="cs-section">
+    <h2>The Problem</h2>
+    <p>Most budgeting apps greet you with blank dashboards and spreadsheet-style inputs — built for someone who already knows how to budget. For a 24-year-old getting their first salary, they feel immediately alienating.</p>
+    <p><strong>How might we make personal finance feel like a conversation with a financially savvy friend</strong>, rather than a form you're filing with a bank?</p>
+  </div>
+
+  <!-- ── USER ── -->
+  <div class="cs-section">
+    <h2>Who This Is For</h2>
+    <p>Young professionals, 22–30. They have income but no system — stuck between "I'll sort it out later" and real financial anxiety.</p>
+    <div class="cs-chips">
+      <div class="cs-chip"><span class="cs-chip-icon">💼</span> First salary, no budget</div>
+      <div class="cs-chip"><span class="cs-chip-icon">😅</span> Self-aware but paralyzed</div>
+      <div class="cs-chip"><span class="cs-chip-icon">📱</span> Wants personality, not forms</div>
+    </div>
+  </div>
+
+  <!-- ── GALLERY: ONBOARDING ── -->
+  <div class="cs-gallery-wrap">
+    <div class="cs-gallery-label">Onboarding Flow</div>
+    <div class="cs-gallery-title">Meeting the user before asking for data</div>
+    <div class="cs-gallery-desc">Flow asks 4 conversational questions before touching any numbers. No blank templates, no judgment — just warm, direct questions a friend would ask.</div>
+    <div class="cs-gallery">
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone"><img src="assets/flow-signup.png" alt="Sign up" /></div>
+        <div class="cs-gallery-caption">Sign up</div>
       </div>
-      <div class="cs-meta-item">
-        <label>Duration</label>
-        <span>2–3 weeks</span>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone"><img src="assets/flow-q1-brings.png" alt="What brings you?" /></div>
+        <div class="cs-gallery-caption">What brings you?</div>
       </div>
-      <div class="cs-meta-item">
-        <label>Tools Used</label>
-        <span>Google Stitch, Figma, Claude</span>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone"><img src="assets/flow-q2-comfort.png" alt="Comfort with money" /></div>
+        <div class="cs-gallery-caption">Comfort level</div>
       </div>
-      <div class="cs-meta-item">
-        <label>Platform</label>
-        <span>iOS Mobile App</span>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone"><img src="assets/flow-q3-salary.png" alt="Salary" /></div>
+        <div class="cs-gallery-caption">Take-home salary</div>
       </div>
-      <div class="cs-meta-item">
-        <label>Status</label>
-        <span>Concept — no testing yet</span>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone"><img src="assets/flow-q4-goals.png" alt="Goals" /></div>
+        <div class="cs-gallery-caption">What matters most</div>
       </div>
     </div>
   </div>
 
-  <!-- BODY -->
-  <div class="cs-body">
-
-    <!-- PROBLEM -->
-    <div class="cs-section">
-      <h2>The Problem</h2>
-      <p>
-        Most budgeting apps assume you already know how to budget. They greet you with spreadsheet-style dashboards, categories you have to manually fill in, and language borrowed from accounting software. For a 24-year-old getting their first real salary — they feel instantly alienating.
-      </p>
-      <p>
-        The result? People download them, poke around for a day, then abandon them. Not because they don't care about money — but because the tools make them feel like they're doing it wrong.
-      </p>
-      <div class="cs-callout">
-        <p>"Money management apps feel like they were built for my parents. I don't have an investment portfolio — I just want to stop running out of money before the 25th."</p>
+  <!-- ── FEATURE: DASHBOARD ── -->
+  <div class="cs-feature-wrap">
+    <div class="cs-feature-inner">
+      <div class="cs-feature-text">
+        <h3>Dashboard — context over raw numbers</h3>
+        <p>Instead of showing a lone balance, Flow shows ₹23,800 alongside when salary arrived, what's already spent, saved, and left — plus a spending trend chart. The user understands their situation at a glance without doing math.</p>
       </div>
-      <p>
-        The design challenge: <strong>how might we make personal finance feel like a conversation with a financially savvy friend</strong>, rather than a form you're submitting to a bank?
-      </p>
-    </div>
-
-    <!-- TARGET USER -->
-    <div class="cs-section">
-      <h2>Who This Is For</h2>
-      <p>
-        <strong>Young professionals, 22–30 years old.</strong> They have a salary — maybe their first real one — and they're figuring out what to do with it. They're not broke, but they're not investing either. They live in a grey zone between "I'll sort it out later" and genuine financial anxiety.
-      </p>
-      <p>
-        Key traits of this user:
-      </p>
-      <div class="cs-decisions">
-        <div class="cs-decision">
-          <h3>They're financially self-aware but action-paralyzed</h3>
-          <p>They know they should save. They don't know where to start. A blank budget template doesn't help — it just emphasizes how unprepared they feel.</p>
-        </div>
-        <div class="cs-decision">
-          <h3>They respond to personality, not formality</h3>
-          <p>They use apps like Duolingo and Notion that feel like tools built for humans. Finance shouldn't feel different.</p>
-        </div>
-        <div class="cs-decision">
-          <h3>They want to be met where they are</h3>
-          <p>Not where a financial advisor thinks they should be. Their baseline could be "I have no idea what I spend" — and that's a valid starting point.</p>
-        </div>
+      <div class="cs-feature-phone">
+        <img src="assets/flow-dashboard.png" alt="Flow dashboard" />
       </div>
     </div>
+  </div>
 
-    <!-- PROCESS -->
-    <div class="cs-section">
-      <h2>My Process</h2>
-      <p>
-        I used a hybrid approach: <strong>AI for ideation and speed, my own judgment for every design decision</strong>. Here's how it actually worked:
-      </p>
-      <div class="cs-steps">
-        <div class="cs-step">
-          <div class="cs-step-num">1</div>
-          <div class="cs-step-content">
-            <h3>Direction from Google Stitch</h3>
-            <p>I used Google Stitch to generate the initial concept and overall direction — the idea of a conversational onboarding, the name "Flow," the tone. Stitch gave me a strong starting point but not a finished design.</p>
-          </div>
+  <!-- ── FEATURE: BUDGET ── -->
+  <div class="cs-feature-wrap" style="background: #f8fafc;">
+    <div class="cs-feature-inner flip">
+      <div class="cs-feature-text">
+        <h3>Budget setup — you type, Flow builds it</h3>
+        <p>"Just type what you want to save." No categories to assign. No percentages to calculate. The user states a goal in plain language and Flow structures the budget around it.</p>
+      </div>
+      <div class="cs-feature-phone cs-feature-phone">
+        <img src="assets/flow-budget.png" alt="Set a budget" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURE: SUCCESS ── -->
+  <div class="cs-feature-wrap">
+    <div class="cs-feature-inner">
+      <div class="cs-feature-text">
+        <h3>Celebration — small wins feel big</h3>
+        <p>"You actually did it, Raghav." When a user sets their first goal, Flow celebrates it like it matters — because for someone who's never budgeted before, it does. The screen shows ₹2,000/month toward a new phone and reminds them they're 8 years ahead of most 22-year-olds.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/flow-success.png" alt="You did it" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURE: EDUCATION ── -->
+  <div class="cs-feature-wrap" style="background: #f8fafc;">
+    <div class="cs-feature-inner flip">
+      <div class="cs-feature-text">
+        <h3>Education — "What is a budget, really?"</h3>
+        <p>First-time budgeters don't know what they don't know. Flow includes lightweight financial literacy screens that explain concepts in plain language — embedded in the flow, not locked behind a help section.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/flow-education.png" alt="What is a budget" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROCESS ── -->
+  <div class="cs-process-wrap">
+    <div class="cs-process-inner">
+      <h2>Process — honest about AI</h2>
+      <div class="cs-process-strip">
+        <div class="cs-process-step">
+          <div class="cs-process-num">1</div>
+          <h4>Direction via Google Stitch</h4>
+          <p>Generated initial concept: conversational onboarding, the name "Flow," overall tone.</p>
         </div>
-        <div class="cs-step">
-          <div class="cs-step-num">2</div>
-          <div class="cs-step-content">
-            <h3>Choosing what to keep</h3>
-            <p>I reviewed everything Stitch generated and made deliberate choices: which screens served the user journey, which interactions felt forced, which visual directions felt authentic vs. generic. I cut a lot.</p>
-          </div>
+        <div class="cs-process-step">
+          <div class="cs-process-num">2</div>
+          <h4>Choosing what to keep</h4>
+          <p>Reviewed every screen. Kept what served the user, cut what felt forced or generic.</p>
         </div>
-        <div class="cs-step">
-          <div class="cs-step-num">3</div>
-          <div class="cs-step-content">
-            <h3>Refinement in Figma with Claude</h3>
-            <p>I used Claude to refine and elevate specific elements — sharpening the copy on onboarding questions so they felt genuinely warm (not sarcastic-warm), tightening the information hierarchy on the dashboard, and thinking through the progression of screens.</p>
-          </div>
+        <div class="cs-process-step">
+          <div class="cs-process-num">3</div>
+          <h4>Refinement with Claude</h4>
+          <p>Sharpened copy, tightened hierarchy on the dashboard, refined the screen progression.</p>
         </div>
-        <div class="cs-step">
-          <div class="cs-step-num">4</div>
-          <div class="cs-step-content">
-            <h3>Building out the UI system</h3>
-            <p>I developed a consistent visual language — color tokens, type scale, card patterns — so every screen felt like it belonged to the same product. Light and dark themes were both designed end-to-end.</p>
-          </div>
+        <div class="cs-process-step">
+          <div class="cs-process-num">4</div>
+          <h4>UI system in Figma</h4>
+          <p>Color tokens, type scale, components — built for consistency across light and dark themes.</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- SCREENS -->
-    <div class="cs-section">
-      <h2>The Design</h2>
-      <p>
-        Flow's experience is built around two core moments: a <strong>conversational onboarding</strong> that earns trust before asking for data, and a <strong>dashboard</strong> that shows spending in context rather than raw numbers.
-      </p>
-
-      <div class="cs-screens">
-        <h3>Onboarding Flow — Meeting the User First</h3>
-        <p>Instead of asking "enter your monthly budget," Flow starts by asking questions a friend would ask. The tone is warm and direct — no jargon, no judgment.</p>
-        <div class="cs-screen-grid">
-          <div class="cs-screen-item">
-            <div class="cs-screen-phone">
-              <img src="assets/thumb-fintech.png" alt="Flow onboarding screen" />
-            </div>
-            <div class="cs-screen-label">Sign up</div>
-          </div>
-          <div class="cs-screen-item">
-            <div class="cs-screen-phone">
-              <img src="assets/thumb-fintech.png" alt="Flow goal screen" style="object-position: 25% top;" />
-            </div>
-            <div class="cs-screen-label">What brings you?</div>
-          </div>
-          <div class="cs-screen-item">
-            <div class="cs-screen-phone">
-              <img src="assets/thumb-fintech.png" alt="Flow salary screen" style="object-position: 50% top;" />
-            </div>
-            <div class="cs-screen-label">Your comfort level</div>
-          </div>
-          <div class="cs-screen-item">
-            <div class="cs-screen-phone">
-              <img src="assets/thumb-fintech.png" alt="Flow dashboard" style="object-position: 75% top;" />
-            </div>
-            <div class="cs-screen-label">Dashboard</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cs-decisions">
-        <div class="cs-decision">
-          <h3>Conversational onboarding over blank-slate setup</h3>
-          <p>The first screen the user sees is: <em>"Hey [Name]! What brings you to Flow?"</em> followed by friendly options — not a form. This reduces friction and immediately signals: this app is going to talk to you like a person.</p>
-        </div>
-        <div class="cs-decision">
-          <h3>Salary before budget</h3>
-          <p>Most apps ask you to set a budget before knowing your income. Flow asks about take-home salary first and asks how comfortable you are with money stuff — acknowledging that financial literacy varies. The budget gets built around the user's reality, not an ideal.</p>
-        </div>
-        <div class="cs-decision">
-          <h3>Celebration micro-moments</h3>
-          <p>When users complete setup or hit a savings milestone, Flow shows a "You actually did it!" screen. Small wins feel big when the app acknowledges them. This isn't just delight design — it reinforces behavior that benefits the user.</p>
-        </div>
-        <div class="cs-decision">
-          <h3>Light + dark theme as equal citizens</h3>
-          <p>The dark theme isn't an afterthought. Both themes were designed in parallel with the same level of care — because young professionals switch between them based on context (bedtime money-checking is a real use case).</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- WHAT I LEARNED -->
-    <div class="cs-section">
-      <h2>What I Would Test First</h2>
-      <p>
-        This is a concept — no user testing has been done yet. If I were to take this into validation, here's where I'd focus:
-      </p>
-      <div class="cs-steps">
-        <div class="cs-step">
-          <div class="cs-step-num">→</div>
-          <div class="cs-step-content">
-            <h3>Does the conversational tone land or feel patronizing?</h3>
-            <p>Warmth is a fine line. "Hey Raghav!" might feel great to some users and infantilizing to others. I'd test the onboarding copy with 5–8 users in the target age range.</p>
-          </div>
-        </div>
-        <div class="cs-step">
-          <div class="cs-step-num">→</div>
-          <div class="cs-step-content">
-            <h3>Does the dashboard give people the right mental model?</h3>
-            <p>The ₹23,800 overview with bar charts assumes users understand spending categories at a glance. I'd run a comprehension test on the dashboard before assuming it works.</p>
-          </div>
-        </div>
-        <div class="cs-step">
-          <div class="cs-step-num">→</div>
-          <div class="cs-step-content">
-            <h3>Drop-off in the onboarding funnel</h3>
-            <p>Each question is a potential exit point. Tracking where users abandon the flow would tell me which questions feel too intrusive or unclear.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REFLECTION -->
-    <div class="cs-reflection">
+  <!-- ── REFLECTION ── -->
+  <div class="cs-reflection-wrap">
+    <div class="cs-reflection-inner">
       <h2>Reflection</h2>
-      <p>
-        This project changed how I think about AI tools in a design workflow. <strong>Google Stitch didn't design Flow — it gave me a starting direction.</strong> The difference matters. Every screen I shipped went through my own lens: does this serve the user? Does this tone feel right? Is this hierarchy actually readable?
-      </p>
-      <p>
-        AI sped up ideation by maybe 60%. But it didn't replace the judgment calls — which screens to include, which copy felt authentic vs. generated, when a feature was adding complexity rather than value. That part is still entirely human.
-      </p>
-      <p>
-        If I could go back, I'd do user research before designing a single screen. I made assumptions about what "feeling overwhelmed by money" means based on intuition and observation — not interviews. The design might hold up, but I'd want to know for sure, not assume.
-      </p>
-      <p>
-        <strong>What I'm proudest of:</strong> the onboarding flow. It's the riskiest part of the design — asking someone to answer personal questions before they trust you. Getting the tone right took iteration, and I think it landed.
-      </p>
+      <div class="cs-reflection-bullets">
+        <div class="cs-reflection-bullet">
+          <p><strong>AI gave direction, I made decisions.</strong> Google Stitch didn't design Flow — it gave me a starting point. Every screen I kept went through my own lens: does this serve the user? Is this tone right?</p>
+        </div>
+        <div class="cs-reflection-bullet">
+          <p><strong>What I'd do differently:</strong> user research before touching Figma. I made assumptions about what "feeling overwhelmed by money" means — I'd want to validate that with 5–8 interviews first.</p>
+        </div>
+        <div class="cs-reflection-bullet">
+          <p><strong>What I'm proudest of:</strong> the onboarding flow. Getting the tone warm without feeling patronizing took real iteration — and I think it landed.</p>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- CTA -->
-    <div class="cs-cta">
-      <p>Want to see the full Figma file?</p>
+  <!-- ── CTA ── -->
+  <div class="cs-cta-wrap">
+    <p>Want to see the full file?</p>
+    <div class="cs-cta-btns">
       <a class="btn btn-primary" href="https://www.figma.com/design/QJyFWXTpvbGbvNUqII9VpB/Flow---Fintech" target="_blank" rel="noopener">View in Figma ↗</a>
-      &nbsp;&nbsp;
       <a class="btn btn-outline" href="index.html#projects">← All Projects</a>
     </div>
-
   </div>
 
   <script src="script.js"></script>
