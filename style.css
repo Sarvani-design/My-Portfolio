@@ -150,8 +150,11 @@ h1.hero-name span { color: var(--accent); }
 .badge-tag    { background: var(--accent-light); color: var(--accent-dark); }
 .project-card h3 { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); margin-bottom: 0.45rem; }
 .project-card p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.1rem; }
+.project-links { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
 .project-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.83rem; font-weight: 600; color: var(--accent); text-decoration: none; transition: gap 0.2s; }
 .project-link:hover { gap: 0.55rem; color: var(--accent-dark); }
+.project-link-secondary { font-size: 0.83rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+.project-link-secondary:hover { color: var(--accent); }
 
 /* ── ABOUT ── */
 #about { background: var(--bg); }
