@@ -93,6 +93,8 @@ h1.hero-name span { color: var(--accent); }
 .dark-grad   { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }
 .pink-grad   { background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%); }
 .indigo-grad { background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%); }
+.ig-grad     { background: linear-gradient(135deg, #F0F4FF 0%, #E8D5FF 100%); }
+.zepto-grad  { background: linear-gradient(135deg, #F5F0FF 0%, #DDD6FE 100%); }
 
 /* CSS phone device frame */
 .mock-phone {
