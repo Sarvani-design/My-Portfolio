@@ -162,6 +162,51 @@
     }
     .cs-feature-phone img { width: 100%; display: block; }
 
+    /* ── AI BUDGET FLOW ── */
+    .cs-budget-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: start;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .cs-budget-step { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+    .cs-budget-phone {
+      width: 180px; background: #1a1a1a; border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.18); flex-shrink: 0;
+    }
+    .cs-budget-phone img { width: 100%; display: block; }
+    .cs-budget-step-label {
+      display: flex; gap: 0.7rem; align-items: flex-start;
+      text-align: left; max-width: 200px;
+    }
+    .cs-step-num {
+      display: flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent); color: #fff; font-size: 0.75rem; font-weight: 700;
+    }
+    .cs-budget-step-label strong { display: block; font-size: 0.85rem; color: var(--text); margin-bottom: 0.3rem; }
+    .cs-budget-step-label p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+    .cs-budget-arrow {
+      font-size: 1.5rem; color: var(--accent); font-weight: 700;
+      align-self: center; padding-top: 2rem;
+    }
+    .cs-budget-callout {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: white; border: 1px solid #bfdbfe; border-radius: 14px;
+      padding: 1.2rem 1.4rem; max-width: 680px; margin: 0 auto;
+    }
+    .cs-budget-callout p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+    .cs-budget-callout strong { color: var(--text); }
+    @media (max-width: 640px) {
+      .cs-budget-flow {
+        grid-template-columns: 1fr;
+        max-width: 260px; margin: 0 auto 2rem;
+      }
+      .cs-budget-arrow { transform: rotate(90deg); align-self: center; padding: 0; }
+      .cs-budget-step-label { max-width: 100%; }
+    }
+
     /* ── PROCESS STRIP ── */
     .cs-process-wrap {
       background: var(--bg); padding: 3rem 2rem;
@@ -338,15 +383,70 @@
     </div>
   </div>
 
-  <!-- ── FEATURE: BUDGET ── -->
-  <div class="cs-feature-wrap" style="background: #f8fafc;">
-    <div class="cs-feature-inner flip">
-      <div class="cs-feature-text">
-        <h3>Budget setup — you type, Flow builds it</h3>
-        <p>"Just type what you want to save." No categories to assign. No percentages to calculate. The user states a goal in plain language and Flow structures the budget around it.</p>
+  <!-- ── FEATURE: AI BUDGET FLOW ── -->
+  <div class="cs-feature-wrap" style="background: #f0f7ff; border-top: 1px solid #dbeafe;">
+    <div style="max-width: var(--max); margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <span style="display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-dark); background: rgba(20,184,166,0.12); padding: 0.3rem 0.9rem; border-radius: 99px; margin-bottom: 0.8rem;">Core Feature · Post Onboarding</span>
+        <h3 style="font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--text); margin: 0 0 0.5rem; letter-spacing: -0.02em;">Set a Budget — Just Talk to Flow</h3>
+        <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 520px; margin: 0 auto; line-height: 1.7;">No categories. No spreadsheets. The user types what they want to save in plain English — Flow understands, analyses, and builds the budget automatically.</p>
       </div>
-      <div class="cs-feature-phone cs-feature-phone">
-        <img src="assets/flow-budget.png" alt="Set a budget" />
+
+      <!-- 3-screen AI flow -->
+      <div class="cs-budget-flow">
+        <!-- Screen 1 -->
+        <div class="cs-budget-step">
+          <div class="cs-budget-phone">
+            <img src="assets/flow-budget-prompt-empty.png" alt="Set a budget — empty prompt" />
+          </div>
+          <div class="cs-budget-step-label">
+            <span class="cs-step-num">1</span>
+            <div>
+              <strong>Open the prompt</strong>
+              <p>After onboarding, Flow opens a natural language input. No dropdowns, no forms — just a text field that says exactly what to do.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="cs-budget-arrow">→</div>
+
+        <!-- Screen 2 -->
+        <div class="cs-budget-step">
+          <div class="cs-budget-phone">
+            <img src="assets/flow-budget-prompt-typed.png" alt="User typed their goal" />
+          </div>
+          <div class="cs-budget-step-label">
+            <span class="cs-step-num">2</span>
+            <div>
+              <strong>Type the goal</strong>
+              <p>"I want to save ₹2,000 every month to buy a new phone." One sentence. No financial jargon required. Then tap <em>Analyse →</em></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="cs-budget-arrow">→</div>
+
+        <!-- Screen 3 -->
+        <div class="cs-budget-step">
+          <div class="cs-budget-phone">
+            <img src="assets/flow-budget-understood.png" alt="Flow understood — budget breakdown" />
+          </div>
+          <div class="cs-budget-step-label">
+            <span class="cs-step-num">3</span>
+            <div>
+              <strong>Flow understood</strong>
+              <p>Flow parses the intent and surfaces: category, goal name, monthly budget, estimated time, and remaining balance — then asks to confirm.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Design rationale callout -->
+      <div class="cs-budget-callout">
+        <span style="font-size: 1.3rem;">💡</span>
+        <p><strong>Why conversational input?</strong> Traditional budgeting apps force users to think in categories first. Flow flips it — you start with your goal, and the structure follows. This removes the blank-page anxiety that causes most users to skip budgeting entirely.</p>
       </div>
     </div>
   </div>
