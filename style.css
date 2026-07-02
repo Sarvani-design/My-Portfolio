@@ -185,24 +185,18 @@ h1.hero-name span { color: var(--accent); }
 .chip.tech { background: rgba(26,26,26,0.05); color: var(--text); border-color: var(--border); }
 .chip.ai { background: rgba(139,92,246,0.08); color: #7C3AED; border-color: rgba(139,92,246,0.2); }
 
-/* ── EXPERIENCE ── */
+/* ── EXPERIENCE & EDUCATION ── */
 #experience { background: var(--surface); border-top: 1px solid var(--border); }
-.tl { margin-top: 2rem; }
-.tl-item { display: grid; grid-template-columns: 160px 1fr; gap: 1.5rem; padding: 1.6rem 0; border-bottom: 1px solid var(--border); }
-.tl-item:last-child { border-bottom: none; }
-.tl-date { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; padding-top: 0.15rem; }
-.tl-role { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
-.tl-company { font-size: 0.84rem; color: var(--accent-dark); font-weight: 600; margin: 0.2rem 0 0.5rem; }
-.tl-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.55; }
-
-/* ── EDUCATION ── */
-#education { background: var(--bg); }
-.edu-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem; margin-top: 2rem; }
-.edu-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.4rem; transition: border-color 0.2s; }
-.edu-card:hover { border-color: var(--accent); }
-.edu-card h4 { font-family: 'Sora', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; letter-spacing: -0.01em; }
-.edu-card .edu-school { font-size: 0.83rem; color: var(--accent-dark); font-weight: 600; margin-bottom: 0.25rem; }
-.edu-card .edu-year { font-size: 0.78rem; color: var(--text-muted); }
+.exp-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+.exp-table { border-top: 1px solid var(--border); }
+.exp-table-edu { margin-top: 2rem; border-top: 2px dashed var(--border); }
+.exp-row { display: grid; grid-template-columns: 1fr 1fr auto; align-items: center; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
+.exp-row:last-child { border-bottom: none; }
+.exp-role { font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text); }
+.exp-company { font-size: 0.86rem; color: var(--accent-dark); font-weight: 600; }
+.exp-date { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; text-align: right; }
+.btn-outline { display: inline-block; padding: 0.5rem 1.1rem; border: 1.5px solid var(--accent); color: var(--accent); border-radius: 6px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+.btn-outline:hover { background: var(--accent); color: #fff; }
 
 /* ── CONTACT ── */
 #contact { background: #111827; color: #fff; text-align: center; padding: 4.5rem 2rem; }
