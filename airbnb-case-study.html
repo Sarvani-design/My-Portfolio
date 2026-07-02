@@ -161,6 +161,55 @@
     }
     .cs-feature-phone img { width: 100%; display: block; }
 
+    /* ── AIRBNB PACKAGE FLOW ── */
+    .ab-pkg-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: start;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .ab-pkg-step { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .ab-pkg-phone {
+      width: 160px; background: #1a1a1a; border-radius: 24px; overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18); flex-shrink: 0;
+    }
+    .ab-pkg-phone img { width: 100%; display: block; }
+    .ab-pkg-label {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      text-align: left; max-width: 170px;
+    }
+    .ab-step-num {
+      display: flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: #f97316; color: #fff; font-size: 0.7rem; font-weight: 700;
+    }
+    .ab-pkg-label strong { display: block; font-size: 0.8rem; color: var(--text); margin-bottom: 0.25rem; }
+    .ab-pkg-label p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+    .ab-pkg-arrow {
+      font-size: 1.3rem; color: #f97316; font-weight: 700;
+      align-self: center; padding-top: 1.5rem;
+    }
+    .ab-pkg-callout {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: white; border: 1px solid #fed7aa; border-radius: 14px;
+      padding: 1.2rem 1.4rem; max-width: 720px; margin: 0 auto;
+    }
+    .ab-pkg-callout p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+    .ab-pkg-callout strong { color: var(--text); }
+    @media (max-width: 900px) {
+      .ab-pkg-flow {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .ab-pkg-arrow { display: none; }
+      .ab-pkg-label { max-width: 100%; }
+    }
+    @media (max-width: 500px) {
+      .ab-pkg-flow { grid-template-columns: 1fr; max-width: 240px; margin: 0 auto 2rem; }
+      .ab-pkg-phone { width: 200px; }
+    }
+
     /* ── DESIGN SYSTEM BANNER ── */
     .cs-system-wrap { background: #1a1a1a; padding: 3rem 2rem; border-top: 1px solid #2d2d2d; }
     .cs-system-inner { max-width: var(--max); margin: 0 auto; }
@@ -372,14 +421,73 @@
   </div>
 
   <!-- ── FEATURE: PACKAGE BOOKING ── -->
-  <div class="cs-feature-wrap" style="background: #fafafa;">
-    <div class="cs-feature-inner flip">
-      <div class="cs-feature-text">
-        <h3>Package booking — Stay + Experience in one flow</h3>
-        <p>A new feature concept: package-style itinerary booking where users pick a destination (e.g. Udaipur), select a stay, and add experiences — all in one unified checkout. The timeline view shows check-in/check-out with the property card and pricing in context, making multi-component trips manageable.</p>
+  <div class="cs-feature-wrap" style="background: linear-gradient(160deg, #fff7ed 0%, #fef3f2 100%); border-top: 1px solid #fed7aa;">
+    <div style="max-width: var(--max); margin: 0 auto;">
+
+      <!-- Header -->
+      <div style="text-align: center; margin-bottom: 2.2rem;">
+        <span style="display:inline-block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#c2410c; background:rgba(249,115,22,0.12); padding:0.3rem 0.9rem; border-radius:99px; margin-bottom:0.8rem;">New Feature · Core Concept</span>
+        <h3 style="font-family:'Sora',sans-serif; font-size:1.4rem; font-weight:800; color:var(--text); margin:0 0 0.5rem; letter-spacing:-0.02em;">Packages — Build Your Trip in One Flow</h3>
+        <p style="font-size:0.95rem; color:var(--text-muted); max-width:540px; margin:0 auto; line-height:1.7;">The biggest insight from research: travellers visiting Airbnb for a destination end up juggling 3–4 tabs. Packages brings stay + experiences into a single booking flow — pick your destination, add a stay, layer in activities, and get a full itinerary with one checkout.</p>
       </div>
-      <div class="cs-feature-phone">
-        <img src="assets/thumb-airbnb.png" alt="Package booking flow" />
+
+      <!-- 5-screen flow -->
+      <div class="ab-pkg-flow">
+
+        <div class="ab-pkg-step">
+          <div class="ab-pkg-phone"><img src="assets/airbnb-pkg-home.png" alt="Home — Packages tab" /></div>
+          <div class="ab-pkg-label">
+            <span class="ab-step-num">1</span>
+            <div><strong>Discover</strong><p>A new "Packages" entry point from the home screen lets users switch from browsing individual listings to planning a destination trip.</p></div>
+          </div>
+        </div>
+
+        <div class="ab-pkg-arrow">→</div>
+
+        <div class="ab-pkg-step">
+          <div class="ab-pkg-phone"><img src="assets/airbnb-pkg-stay.png" alt="Create Package — Select Stay" /></div>
+          <div class="ab-pkg-label">
+            <span class="ab-step-num">2</span>
+            <div><strong>Add a Stay</strong><p>Search and select the property for the trip. Dates, guests, and location are set once — they carry through the whole package.</p></div>
+          </div>
+        </div>
+
+        <div class="ab-pkg-arrow">→</div>
+
+        <div class="ab-pkg-step">
+          <div class="ab-pkg-phone"><img src="assets/airbnb-pkg-experience.png" alt="Create Package — Add Experiences" /></div>
+          <div class="ab-pkg-label">
+            <span class="ab-step-num">3</span>
+            <div><strong>Add Experiences</strong><p>Browse activities at the destination and add them to the package. Each experience slots itself into the available days of the stay.</p></div>
+          </div>
+        </div>
+
+        <div class="ab-pkg-arrow">→</div>
+
+        <div class="ab-pkg-step">
+          <div class="ab-pkg-phone"><img src="assets/airbnb-pkg-itinerary.png" alt="Package Itinerary — full breakdown" /></div>
+          <div class="ab-pkg-label">
+            <span class="ab-step-num">4</span>
+            <div><strong>Review Itinerary</strong><p>The package auto-generates a day-by-day timeline: check-in, each experience slotted into the right day, and check-out — with total pricing in context.</p></div>
+          </div>
+        </div>
+
+        <div class="ab-pkg-arrow">→</div>
+
+        <div class="ab-pkg-step">
+          <div class="ab-pkg-phone"><img src="assets/airbnb-pkg-confirmed.png" alt="Reservation Confirmed" /></div>
+          <div class="ab-pkg-label">
+            <span class="ab-step-num">5</span>
+            <div><strong>One Checkout</strong><p>Stay + all experiences confirm together. One payment, one confirmation screen — the whole trip booked in a single flow.</p></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Design rationale callout -->
+      <div class="ab-pkg-callout">
+        <span style="font-size:1.3rem;">💡</span>
+        <p><strong>Why a unified flow?</strong> Research showed travellers open Airbnb for stays but leave to book activities on Google, Viator, or GetYourGuide. Packages eliminates tab-switching by making the destination — not the listing — the unit of planning. This also unlocks a new mental model: you're not booking a room, you're booking a trip.</p>
       </div>
     </div>
   </div>
