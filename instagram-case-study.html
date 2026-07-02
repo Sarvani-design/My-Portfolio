@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram Watch History — Case Study · Sarvani Vulavalapudi</title>
+  <meta name="description" content="Case study: designing a Watch History feature within Instagram's existing design system." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── BACK LINK ── */
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 80px; left: 2rem; z-index: 10;
+    }
+    .cs-back:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .cs-hero {
+      min-height: 82vh;
+      background: linear-gradient(145deg, #1a0533 0%, #2d1260 45%, #0f2b5b 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 7rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cs-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(131,58,180,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cs-hero-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.2rem; }
+    .cs-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.8rem; border-radius: 99px;
+      background: rgba(168,85,247,0.25); color: #d8b4fe;
+    }
+    .cs-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      color: #fff; line-height: 1.15; margin-bottom: 0.8rem;
+    }
+    .cs-hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.65);
+      max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.65;
+    }
+
+    /* 3 floating phones in hero */
+    .cs-hero-phones {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 1.2rem; width: 100%; max-width: 640px; margin: 0 auto;
+    }
+    .cs-hero-phone {
+      background: #1a1a1a; border-radius: 28px;
+      overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08);
+    }
+    .cs-hero-phone.center { width: 175px; transform: translateY(-20px); z-index: 2; }
+    .cs-hero-phone.side   { width: 148px; opacity: 0.75; }
+    .cs-hero-phone img { width: 100%; display: block; }
+
+    /* ── META BAR ── */
+    .cs-meta-bar {
+      background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.4rem 2rem;
+    }
+    .cs-meta-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.2rem;
+    }
+    .cs-meta-item label {
+      display: block; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem;
+    }
+    .cs-meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+
+    /* ── SECTION WRAPPER ── */
+    .cs-section {
+      max-width: 800px; margin: 0 auto; padding: 3.5rem 2rem 0;
+    }
+    .cs-section h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.75rem; letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .cs-section h2::before {
+      content: ''; display: inline-block; width: 3px; height: 1.1em;
+      background: #a855f7; border-radius: 2px; flex-shrink: 0;
+    }
+    .cs-section p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1rem; }
+    .cs-section p:last-child { margin-bottom: 0; }
+    .cs-section strong { color: var(--text); }
+
+    /* ── USER CHIPS ── */
+    .cs-chips { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+    .cs-chip {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.8rem; font-weight: 500; color: var(--text);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 0.4rem 0.85rem; border-radius: 99px;
+    }
+    .cs-chip-icon { font-size: 1rem; }
+
+    /* ── FEATURE SECTIONS ── */
+    .cs-feature-wrap { background: var(--surface); padding: 3rem 2rem; border-top: 1px solid var(--border); }
+    .cs-feature-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+    }
+    .cs-feature-inner.flip { grid-template-columns: auto 1fr; }
+    .cs-feature-inner.flip .cs-feature-phone { order: -1; }
+    .cs-feature-text h3 {
+      font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.02em;
+    }
+    .cs-feature-text p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin: 0 0 0.75rem; }
+    .cs-feature-text p:last-child { margin-bottom: 0; }
+    .cs-feature-phone {
+      width: 200px; background: #1a1a1a; border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-shrink: 0;
+    }
+    .cs-feature-phone img { width: 100%; display: block; }
+
+    /* ── CORE FEATURE FLOW (3-screen) ── */
+    .iw-flow-wrap {
+      background: linear-gradient(160deg, #0f0f1a 0%, #1a0f2e 100%);
+      padding: 3.5rem 2rem;
+      border-top: 1px solid #2d1260;
+    }
+    .iw-flow-inner { max-width: var(--max); margin: 0 auto; }
+    .iw-flow-header { text-align: center; margin-bottom: 2.5rem; }
+    .iw-flow-tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #d8b4fe;
+      background: rgba(168,85,247,0.2); padding: 0.3rem 0.9rem;
+      border-radius: 99px; margin-bottom: 0.8rem;
+    }
+    .iw-flow-header h3 {
+      font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 800;
+      color: #fff; margin: 0 0 0.5rem; letter-spacing: -0.02em;
+    }
+    .iw-flow-header p { font-size: 0.95rem; color: rgba(255,255,255,0.55); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+
+    .iw-flow-screens {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: start;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .iw-screen-step { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+    .iw-screen-phone {
+      width: 190px; background: #0f0f0f; border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;
+    }
+    .iw-screen-phone img { width: 100%; display: block; }
+    .iw-screen-label {
+      display: flex; gap: 0.7rem; align-items: flex-start;
+      text-align: left; max-width: 210px;
+    }
+    .iw-step-num {
+      display: flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: #a855f7; color: #fff; font-size: 0.75rem; font-weight: 700;
+    }
+    .iw-screen-label strong { display: block; font-size: 0.85rem; color: #fff; margin-bottom: 0.3rem; }
+    .iw-screen-label p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.6; margin: 0; }
+    .iw-flow-arrow {
+      font-size: 1.5rem; color: #a855f7; font-weight: 700;
+      align-self: center; padding-top: 2rem;
+    }
+    .iw-callout {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3);
+      border-radius: 14px; padding: 1.2rem 1.4rem;
+      max-width: 680px; margin: 0 auto;
+    }
+    .iw-callout p { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin: 0; }
+    .iw-callout strong { color: #fff; }
+
+    /* ── DESIGN DECISIONS ── */
+    .cs-decisions-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.2rem;
+    }
+    .cs-decision-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.2rem;
+    }
+    .cs-decision-card h4 {
+      font-size: 0.88rem; font-weight: 700; color: var(--text);
+      margin-bottom: 0.4rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .cs-decision-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; margin: 0; }
+
+    /* ── PROCESS STRIP ── */
+    .cs-process-wrap { background: var(--surface); padding: 3rem 2rem; border-top: 1px solid var(--border); }
+    .cs-process-inner { max-width: var(--max); margin: 0 auto; }
+    .cs-process-inner h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 1.5rem; letter-spacing: -0.02em;
+    }
+    .cs-process-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+    }
+    .cs-process-step {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: 0.6rem; padding: 1.2rem 0.5rem;
+      border-radius: 12px; background: #f9fafb; border: 1px solid var(--border);
+    }
+    .cs-process-icon { font-size: 1.6rem; }
+    .cs-process-step span {
+      font-size: 0.75rem; font-weight: 600; color: var(--text); letter-spacing: 0.02em;
+    }
+    .cs-process-step p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+    /* ── REFLECTION ── */
+    .cs-reflection-wrap {
+      background: #0f0f1a; padding: 3rem 2rem; border-top: 1px solid #1e1e30;
+    }
+    .cs-reflection-inner { max-width: 680px; margin: 0 auto; }
+    .cs-reflection-inner h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700;
+      color: #fff; margin-bottom: 1.2rem;
+    }
+    .cs-reflection-bullet {
+      display: flex; gap: 0.75rem; margin-bottom: 0.9rem; align-items: flex-start;
+    }
+    .cs-reflection-bullet::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: #a855f7; flex-shrink: 0; margin-top: 0.45rem;
+    }
+    .cs-reflection-bullet p { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.7; margin: 0; }
+    .cs-reflection-bullet strong { color: #fff; }
+
+    /* ── CTA ── */
+    .cs-cta-wrap { padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); }
+    .cs-cta-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #a855f7; color: #fff; font-weight: 700; font-size: 0.95rem;
+      padding: 0.85rem 2rem; border-radius: 99px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .cs-cta-link:hover { background: #9333ea; transform: translateY(-2px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .cs-hero-phone.side { display: none; }
+      .cs-hero-phone.center { width: 200px; transform: none; }
+      .cs-feature-inner, .cs-feature-inner.flip { grid-template-columns: 1fr; text-align: center; }
+      .cs-feature-inner.flip .cs-feature-phone { order: 0; margin: 0 auto; }
+      .cs-feature-phone { margin: 0 auto; }
+      .cs-process-strip { grid-template-columns: 1fr 1fr; }
+      .cs-decisions-grid { grid-template-columns: 1fr; }
+      .iw-flow-screens { grid-template-columns: 1fr; max-width: 240px; margin: 0 auto 2rem; }
+      .iw-flow-arrow { transform: rotate(90deg); align-self: center; padding: 0; }
+      .iw-screen-label { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-logo" href="index.html">SV</a>
+    <div class="nav-links">
+      <a href="index.html#projects">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <a class="cs-back" href="index.html">← Back</a>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="cs-hero-tags">
+      <span class="cs-tag">Feature Design</span>
+      <span class="cs-tag">Case Study</span>
+      <span class="cs-tag">Instagram</span>
+      <span class="cs-tag">Mobile</span>
+    </div>
+    <h1>Instagram<br>Watch History</h1>
+    <p class="cs-hero-sub">A new feature that lets users find every Reel they've watched or liked — without ever leaving Instagram's design language.</p>
+    <div class="cs-hero-phones">
+      <div class="cs-hero-phone side">
+        <img src="assets/insta-wh-profile.png" alt="Profile menu entry point" />
+      </div>
+      <div class="cs-hero-phone center">
+        <img src="assets/insta-wh-history.png" alt="Watch History — Reels tab" />
+      </div>
+      <div class="cs-hero-phone side">
+        <img src="assets/insta-wh-like.png" alt="Watch History — Liked tab" />
+      </div>
+    </div>
+  </section>
+
+  <!-- META BAR -->
+  <div class="cs-meta-bar">
+    <div class="cs-meta-inner">
+      <div class="cs-meta-item"><label>Role</label><span>Solo UX Designer</span></div>
+      <div class="cs-meta-item"><label>Type</label><span>Feature Addition</span></div>
+      <div class="cs-meta-item"><label>Platform</label><span>Instagram (iOS / Android)</span></div>
+      <div class="cs-meta-item"><label>Tools</label><span>Figma, Instagram UI Kit</span></div>
+      <div class="cs-meta-item"><label>Constraint</label><span>Zero new design patterns</span></div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <div class="cs-section">
+    <h2>The Problem</h2>
+    <p>Instagram Reels are designed to be consumed fast — you scroll, you watch, you move on. But users constantly hit a wall: <strong>they can't find a video they watched yesterday.</strong> There's no trail, no history, no way back.</p>
+    <p>If you liked it, it lives under your profile saves. But if you just watched it and scrolled past? Gone. You're left searching by hashtag, replaying your memory of what it looked like, or just giving up.</p>
+    <p><strong>How might we let Instagram users find any video they've already watched or liked — without disrupting the scroll experience or introducing unfamiliar UI?</strong></p>
+  </div>
+
+  <!-- USER -->
+  <div class="cs-section" style="padding-bottom: 3rem;">
+    <h2>Who This Is For</h2>
+    <p>Active Reels consumers who watch 10–30 videos a day. They're not passive — they share, save, and come back to content. But the current app treats every scroll session as ephemeral.</p>
+    <div class="cs-chips">
+      <div class="cs-chip"><span class="cs-chip-icon">📱</span> Watches Reels daily</div>
+      <div class="cs-chip"><span class="cs-chip-icon">🔁</span> Wants to re-watch &amp; share</div>
+      <div class="cs-chip"><span class="cs-chip-icon">😤</span> Can't find videos they've seen</div>
+      <div class="cs-chip"><span class="cs-chip-icon">💾</span> Over-saves just in case</div>
+    </div>
+  </div>
+
+  <!-- CORE FEATURE FLOW -->
+  <div class="iw-flow-wrap">
+    <div class="iw-flow-inner">
+      <div class="iw-flow-header">
+        <div class="iw-flow-tag">Core Feature · 3-Screen Flow</div>
+        <h3>From Profile to History in Three Taps</h3>
+        <p>The feature lives exactly where users already look for account-level settings — no new navigation layer needed.</p>
+      </div>
+
+      <div class="iw-flow-screens">
+
+        <div class="iw-screen-step">
+          <div class="iw-screen-phone">
+            <img src="assets/insta-wh-profile.png" alt="Profile menu showing Watch History option" />
+          </div>
+          <div class="iw-screen-label">
+            <span class="iw-step-num">1</span>
+            <div>
+              <strong>Entry Point</strong>
+              <p>Profile → hamburger menu → "Watch history" — slotted alongside Archive, Saved, and Your activity. No new navigation introduced.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="iw-flow-arrow">→</div>
+
+        <div class="iw-screen-step">
+          <div class="iw-screen-phone">
+            <img src="assets/insta-wh-history.png" alt="Watch History — Reels watched" />
+          </div>
+          <div class="iw-screen-label">
+            <span class="iw-step-num">2</span>
+            <div>
+              <strong>Watched Tab</strong>
+              <p>Every Reel watched, in a 3-column grid. Filterable by date and author. The clapperboard tab shows all consumed content — liked or not.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="iw-flow-arrow">→</div>
+
+        <div class="iw-screen-step">
+          <div class="iw-screen-phone">
+            <img src="assets/insta-wh-like.png" alt="Watch History — Liked videos" />
+          </div>
+          <div class="iw-screen-label">
+            <span class="iw-step-num">3</span>
+            <div>
+              <strong>Liked Tab</strong>
+              <p>The heart tab narrows to only liked videos. Same grid, same filters — the familiar Reels grid pattern applied to a new context.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="iw-callout">
+        <span style="font-size:1.3rem;">💡</span>
+        <p><strong>Zero new patterns.</strong> Every element — the grid layout, the filter chips, the tab bar, the sheet menu — already exists in Instagram's design system. Watch History is a feature addition that feels like it was always there.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE: ENTRY POINT -->
+  <div class="cs-feature-wrap">
+    <div class="cs-feature-inner">
+      <div class="cs-feature-text">
+        <h3>Accessing Watch History — the right home</h3>
+        <p>The first design decision was placement. Instagram has three plausible homes for Watch History: the Explore tab, the Reels tab, or the Profile menu. The Profile menu was the right call — it sits alongside "Your activity", "Archive", and "Saved", all features that answer the same question: "what did I do on this app?"</p>
+        <p>Adding it to the Reels feed would interrupt the scroll. Adding it to Explore would make it feel like a discovery tool rather than a personal record. The Profile menu signals ownership and history, which is exactly what Watch History is.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/insta-wh-frame4.png" alt="Profile menu with Watch History" />
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE: TWO TABS -->
+  <div class="cs-feature-wrap" style="background: #f9fafb;">
+    <div class="cs-feature-inner flip">
+      <div class="cs-feature-text">
+        <h3>Two tabs — watched vs. liked</h3>
+        <p>Watched and liked are different user intents. Watched means "I consumed this" — it's a neutral factual record. Liked means "I explicitly endorsed this" — it's a higher-signal action. Combining them into one list would conflate two very different relationships with content.</p>
+        <p>Separating them into two tabs (clapperboard icon for watched, heart for liked) respects both intents and gives users two genuinely different entry points to find what they're looking for.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/insta-wh-history.png" alt="Watched videos grid with filters" />
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE: FILTERS -->
+  <div class="cs-feature-wrap">
+    <div class="cs-feature-inner">
+      <div class="cs-feature-text">
+        <h3>Filters — three dimensions of findability</h3>
+        <p>A raw grid of watched videos isn't enough if there's no way to narrow it. Three filter chips — <strong>Newest to oldest</strong>, <strong>All dates</strong>, and <strong>All authors</strong> — map to the most natural ways users remember content: "I saw it last week", "it was from a cooking account", "it was recent."</p>
+        <p>The filters use Instagram's existing chip component — visually identical to what already appears in Explore search. No new UI pattern, and users already know how to use them.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/insta-wh-like.png" alt="Liked videos grid with sort filters" />
+      </div>
+    </div>
+  </div>
+
+  <!-- DESIGN DECISIONS -->
+  <div class="cs-section" style="padding-bottom: 3rem;">
+    <h2>Key Design Decisions</h2>
+    <div class="cs-decisions-grid">
+      <div class="cs-decision-card">
+        <h4>🏠 Profile menu, not a new tab</h4>
+        <p>Avoids cluttering the bottom nav bar (already at capacity) and places Watch History alongside analogous personal-record features like Saved and Archive.</p>
+      </div>
+      <div class="cs-decision-card">
+        <h4>📐 Grid, not a list</h4>
+        <p>Reels are visual first. A list view showing titles or captions would be unhelpful — users remember videos by thumbnail, not by caption. The grid matches Reels' existing visual browsing pattern.</p>
+      </div>
+      <div class="cs-decision-card">
+        <h4>🎬 Clapperboard + ♥️ tab icons</h4>
+        <p>Both icons are already in Instagram's icon library. The clapperboard signals "video/content", the heart signals "liked". No new icon design required; the meaning is immediately clear.</p>
+      </div>
+      <div class="cs-decision-card">
+        <h4>🔒 Zero new navigation patterns</h4>
+        <p>Every interaction in Watch History — tapping a grid item, using filter chips, swiping between tabs — uses interaction patterns that already exist in the Instagram app. The learning curve is zero.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="cs-process-wrap">
+    <div class="cs-process-inner">
+      <h2>Process</h2>
+      <div class="cs-process-strip">
+        <div class="cs-process-step">
+          <div class="cs-process-icon">🔍</div>
+          <span>Research</span>
+          <p>Audited existing Instagram patterns — tabs, grids, menus, filter chips. Mapped what already existed.</p>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-process-icon">🗺️</div>
+          <span>User Flow</span>
+          <p>Mapped the entry points across the app. Chose Profile menu after comparing 3 placement options.</p>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-process-icon">✏️</div>
+          <span>Wireframes</span>
+          <p>Low-fi sketches to validate the two-tab metaphor and grid vs. list layout tradeoffs.</p>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-process-icon">📱</div>
+          <span>Hi-Fi Screens</span>
+          <p>Built in Figma using Instagram's exact component library — every element matched the existing system.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div class="cs-reflection-wrap">
+    <div class="cs-reflection-inner">
+      <h2>Reflection</h2>
+      <div class="cs-reflection-bullet">
+        <p><strong>The constraint was the design.</strong> "Zero new patterns" sounds like a limitation — it turned out to be the entire brief. Every decision (placement, layout, icons, filters) was about finding the right existing component for a new job.</p>
+      </div>
+      <div class="cs-reflection-bullet">
+        <p><strong>Two tabs came from asking "what do users mean?"</strong> The instinct was one list. Splitting to two tabs came from recognising that "I watched it" and "I liked it" are genuinely different memories users try to retrieve.</p>
+      </div>
+      <div class="cs-reflection-bullet">
+        <p><strong>What I'd test next:</strong> whether users naturally look for Watch History under Profile, or whether they expect it in the Reels tab. The placement is a hypothesis — a quick usability test with 5 users would confirm or challenge it.</p>
+      </div>
+      <div class="cs-reflection-bullet">
+        <p><strong>What's missing:</strong> a "clear history" option and privacy controls (hide specific videos from history). These are table-stakes for any watch history feature and would be the first additions in a v2.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cs-cta-wrap">
+    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">View the full Figma file with all screens and component notes</p>
+    <a class="cs-cta-link" href="https://www.figma.com/design/wG9jVNozIfldOjHakKl77Y/Instagram-final-CaseStudy" target="_blank" rel="noopener">
+      Open in Figma →
+    </a>
+  </div>
+
+</body>
+</html>
