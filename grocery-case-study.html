@@ -44,19 +44,57 @@
       max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.65;
     }
 
+    /* ── ANDROID PHONE MOCKUP (shared base) ── */
+    .cs-hero-phone,
+    .cs-gallery-phone,
+    .cs-feature-phone {
+      position: relative;
+      background: #111;
+      border: 3px solid #252525;
+      box-shadow: 0 0 0 1px #1c1c1c, inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    /* Camera punch-hole */
+    .cs-hero-phone::before,
+    .cs-gallery-phone::before,
+    .cs-feature-phone::before {
+      content: '';
+      position: absolute;
+      top: 7px; left: 50%; transform: translateX(-50%);
+      width: 9px; height: 9px;
+      background: #050505; border-radius: 50%; z-index: 3;
+    }
+    /* Home indicator bar */
+    .cs-hero-phone::after,
+    .cs-gallery-phone::after,
+    .cs-feature-phone::after {
+      content: '';
+      position: absolute;
+      bottom: 7px; left: 50%; transform: translateX(-50%);
+      width: 35%; height: 3px;
+      background: rgba(255,255,255,0.32); border-radius: 3px;
+    }
+    /* Screen image inside mockup */
+    .cs-hero-phone img,
+    .cs-gallery-phone img,
+    .cs-feature-phone img {
+      width: 100%; display: block;
+      border-radius: 26px;
+      object-fit: cover; object-position: top;
+    }
+
     /* 3 floating phones in hero */
     .cs-hero-phones {
       display: flex; align-items: flex-end; justify-content: center;
-      gap: 1.2rem; width: 100%; max-width: 640px; margin: 0 auto;
+      gap: 1.5rem; width: 100%; max-width: 700px; margin: 0 auto;
     }
     .cs-hero-phone {
-      background: #1a1a1a; border-radius: 28px;
-      overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+      border-radius: 42px;
+      box-shadow: 0 0 0 1px #1c1c1c, 0 28px 70px rgba(0,0,0,0.3);
+      padding: 16px 8px 22px;
       flex-shrink: 0;
     }
-    .cs-hero-phone.center { width: 175px; transform: translateY(-20px); z-index: 2; }
-    .cs-hero-phone.side   { width: 148px; opacity: 0.85; }
-    .cs-hero-phone img { width: 100%; display: block; object-fit: cover; }
+    .cs-hero-phone.center { width: 210px; transform: translateY(-24px); z-index: 2; }
+    .cs-hero-phone.side   { width: 178px; opacity: 0.88; }
 
     /* ── META BAR ── */
     .cs-meta-bar {
@@ -150,14 +188,12 @@
     .cs-gallery::-webkit-scrollbar { display: none; }
     .cs-gallery-item { flex-shrink: 0; text-align: center; }
     .cs-gallery-phone {
-      width: 160px; height: 290px;
-      background: #1a1a1a; border-radius: 24px; overflow: hidden;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+      width: 190px;
+      border-radius: 38px;
+      box-shadow: 0 0 0 1px #1c1c1c, 0 18px 44px rgba(0,0,0,0.26);
+      padding: 14px 7px 20px;
       margin-bottom: 0.75rem;
-    }
-    .cs-gallery-phone img {
-      width: 100%; height: 100%;
-      display: block; object-fit: cover; object-position: top;
+      overflow: hidden;
     }
     .cs-gallery-caption {
       font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
@@ -188,10 +224,12 @@
       padding: 0.25rem 0.7rem; border-radius: 99px; margin-bottom: 0.6rem;
     }
     .cs-feature-phone {
-      width: 200px; background: #1a1a1a; border-radius: 28px; overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-shrink: 0;
+      width: 240px;
+      border-radius: 44px;
+      box-shadow: 0 0 0 1px #1c1c1c, 0 24px 60px rgba(0,0,0,0.28);
+      padding: 18px 9px 24px;
+      flex-shrink: 0; overflow: hidden;
     }
-    .cs-feature-phone img { width: 100%; display: block; object-fit: cover; }
 
     /* ── PIVOT / CHALLENGE SECTION ── */
     .cs-pivot-wrap {
@@ -456,7 +494,7 @@
       </div>
       <div class="cs-feature-phone">
         <img src="assets/gb-screen-category.png" alt="Category listing with filters"
-             style="height:380px; object-fit:cover;" />
+             style="" />
       </div>
     </div>
   </div>
@@ -472,7 +510,7 @@
       </div>
       <div class="cs-feature-phone">
         <img src="assets/gb-screen-compare.png" alt="Comparison table"
-             style="height:380px; object-fit:cover;" />
+             style="" />
       </div>
     </div>
   </div>
@@ -488,7 +526,7 @@
       </div>
       <div class="cs-feature-phone">
         <img src="assets/gb-screen-compare.png" alt="Comparison table showing app logo placement"
-             style="height:380px; object-fit:cover;" />
+             style="" />
       </div>
     </div>
   </div>
