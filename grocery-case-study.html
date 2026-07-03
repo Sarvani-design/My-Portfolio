@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GroceryBuddy — Case Study · Sarvani Vulavalapudi</title>
+  <meta name="description" content="Case study: GroceryBuddy, a cross-platform grocery price comparison app." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── CASE STUDY BASE ── */
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 80px; left: 2rem; z-index: 10;
+    }
+    .cs-back:hover { color: #16a34a; }
+
+    /* ── HERO ── */
+    .cs-hero {
+      min-height: 82vh;
+      background: linear-gradient(145deg, #bbf7d0 0%, #86efac 30%, #d1fae5 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 7rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cs-hero-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.2rem; }
+    .cs-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.8rem; border-radius: 99px;
+      background: rgba(22,163,74,0.15); color: #15803d;
+    }
+    .cs-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      color: #14532d; line-height: 1.15; margin-bottom: 0.8rem;
+    }
+    .cs-hero-sub {
+      font-size: 1.05rem; color: #166534;
+      max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.65;
+    }
+
+    /* 3 floating phones in hero */
+    .cs-hero-phones {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 1.2rem; width: 100%; max-width: 640px; margin: 0 auto;
+    }
+    .cs-hero-phone {
+      background: #1a1a1a; border-radius: 28px;
+      overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+      flex-shrink: 0;
+    }
+    .cs-hero-phone.center { width: 175px; transform: translateY(-20px); z-index: 2; }
+    .cs-hero-phone.side   { width: 148px; opacity: 0.85; }
+    .cs-hero-phone img { width: 100%; display: block; object-fit: cover; }
+
+    /* ── META BAR ── */
+    .cs-meta-bar {
+      background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.4rem 2rem;
+    }
+    .cs-meta-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.2rem;
+    }
+    .cs-meta-item label {
+      display: block; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem;
+    }
+    .cs-meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+
+    /* ── SECTION WRAPPER ── */
+    .cs-section {
+      max-width: 800px; margin: 0 auto; padding: 3.5rem 2rem 0;
+    }
+    .cs-section h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .cs-section h2::before {
+      content: ''; display: inline-block; width: 3px; height: 1.1em;
+      background: #22c55e; border-radius: 2px; flex-shrink: 0;
+    }
+    .cs-section p { color: var(--text-muted); line-height: 1.75; margin-bottom: 0.6rem; font-size: 0.95rem; }
+    .cs-section p:last-child { margin-bottom: 0; }
+    .cs-section strong { color: var(--text); font-weight: 600; }
+
+    /* ── STATS CHIPS ── */
+    .cs-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .cs-stat {
+      flex: 1; min-width: 140px;
+      background: #f0fdf4; border: 1px solid #bbf7d0;
+      border-radius: 14px; padding: 1.2rem 1.4rem;
+    }
+    .cs-stat-num {
+      font-family: 'Sora', sans-serif; font-size: 1.8rem; font-weight: 800;
+      color: #15803d; line-height: 1; margin-bottom: 0.3rem;
+    }
+    .cs-stat-label { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ── RESEARCH 2-COL ── */
+    .cs-research-cols {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;
+    }
+    .cs-research-col {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.4rem;
+    }
+    .cs-research-col h4 {
+      font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin: 0 0 0.8rem; color: var(--text);
+    }
+    .cs-research-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .cs-research-col li { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+    .cs-research-col.problems li::before { content: '✗  '; color: #ef4444; font-weight: 700; }
+    .cs-research-col.needs li::before { content: '✓  '; color: #16a34a; font-weight: 700; }
+    @media (max-width: 560px) { .cs-research-cols { grid-template-columns: 1fr; } }
+
+    /* ── FULL-WIDTH GALLERY ── */
+    .cs-gallery-wrap {
+      background: #f0fdf4;
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+    }
+    .cs-gallery-label {
+      max-width: var(--max); margin: 0 auto 1.6rem;
+      font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: #16a34a;
+    }
+    .cs-gallery-title {
+      max-width: var(--max); margin: 0 auto 0.5rem;
+      font-family: 'Sora', sans-serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--text); letter-spacing: -0.02em;
+    }
+    .cs-gallery-desc {
+      max-width: var(--max); margin: 0 auto 2rem;
+      font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .cs-gallery {
+      max-width: var(--max); margin: 0 auto;
+      display: flex; gap: 1.2rem; overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+    }
+    .cs-gallery::-webkit-scrollbar { display: none; }
+    .cs-gallery-item { flex-shrink: 0; text-align: center; }
+    .cs-gallery-phone {
+      width: 160px; height: 290px;
+      background: #1a1a1a; border-radius: 24px; overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+      margin-bottom: 0.75rem;
+    }
+    .cs-gallery-phone img {
+      width: 100%; height: 100%;
+      display: block; object-fit: cover; object-position: top;
+    }
+    .cs-gallery-caption {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+    }
+
+    /* ── FEATURE SECTION ── */
+    .cs-feature-wrap {
+      background: var(--surface);
+      padding: 3rem 2rem;
+      margin-top: 0;
+      border-top: 1px solid var(--border);
+    }
+    .cs-feature-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+    }
+    .cs-feature-inner.flip { grid-template-columns: auto 1fr; }
+    .cs-feature-inner.flip .cs-feature-phone { order: -1; }
+    .cs-feature-text h3 {
+      font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.02em;
+    }
+    .cs-feature-text p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+    .cs-feature-text .cs-feature-badge {
+      display: inline-block; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: #dcfce7; color: #15803d;
+      padding: 0.25rem 0.7rem; border-radius: 99px; margin-bottom: 0.6rem;
+    }
+    .cs-feature-phone {
+      width: 200px; background: #1a1a1a; border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-shrink: 0;
+    }
+    .cs-feature-phone img { width: 100%; display: block; object-fit: cover; }
+
+    /* ── PIVOT / CHALLENGE SECTION ── */
+    .cs-pivot-wrap {
+      background: #fffbeb;
+      padding: 3rem 2rem;
+      border-top: 1px solid #fde68a;
+    }
+    .cs-pivot-inner {
+      max-width: var(--max); margin: 0 auto;
+    }
+    .cs-pivot-label {
+      font-family: 'Sora', sans-serif; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #b45309; margin-bottom: 0.6rem;
+    }
+    .cs-pivot-inner h3 {
+      font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.6rem;
+    }
+    .cs-pivot-inner > p {
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;
+      max-width: 560px; margin-bottom: 2rem;
+    }
+    .cs-pivot-cols {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    }
+    .cs-pivot-col {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.2rem;
+    }
+    .cs-pivot-col-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .cs-pivot-col.before .cs-pivot-col-label { color: #ef4444; }
+    .cs-pivot-col.after  .cs-pivot-col-label { color: #16a34a; }
+    .cs-pivot-col h5 {
+      font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 700;
+      color: var(--text); margin: 0 0 0.35rem;
+    }
+    .cs-pivot-col p { font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+    @media (max-width: 560px) { .cs-pivot-cols { grid-template-columns: 1fr; } }
+
+    /* ── PROCESS STRIP ── */
+    .cs-process-wrap {
+      background: var(--bg); padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .cs-process-inner { max-width: var(--max); margin: 0 auto; }
+    .cs-process-inner h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700;
+      color: var(--text); margin-bottom: 2rem; letter-spacing: -0.02em;
+    }
+    .cs-process-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--border); border-radius: var(--radius); overflow: hidden;
+    }
+    .cs-process-step {
+      background: var(--surface); padding: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .cs-process-num {
+      width: 2rem; height: 2rem; border-radius: 50%; background: #22c55e;
+      color: white; font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cs-process-step h4 {
+      font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 700;
+      color: var(--text); margin: 0;
+    }
+    .cs-process-step p { font-size: 0.8rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
+
+    /* ── REFLECTION ── */
+    .cs-reflection-wrap {
+      background: #052e16; padding: 3rem 2rem;
+    }
+    .cs-reflection-inner { max-width: 720px; margin: 0 auto; }
+    .cs-reflection-inner h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700;
+      color: white; margin-bottom: 1.5rem; letter-spacing: -0.02em;
+    }
+    .cs-reflection-bullets { display: flex; flex-direction: column; gap: 1rem; }
+    .cs-reflection-bullet {
+      display: grid; grid-template-columns: 1.5rem 1fr; gap: 0.75rem;
+    }
+    .cs-reflection-bullet::before {
+      content: '→'; color: #4ade80; font-weight: 700; font-size: 0.9rem; margin-top: 0.05rem;
+    }
+    .cs-reflection-bullet p { font-size: 0.9rem; color: #94a3b8; line-height: 1.7; margin: 0; }
+    .cs-reflection-bullet strong { color: #e2e8f0; }
+
+    /* ── CTA ── */
+    .cs-cta-wrap { padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); }
+    .cs-cta-wrap p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: 0.9rem; }
+    .cs-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .cs-hero-phone.side { display: none; }
+      .cs-hero-phone.center { width: 200px; transform: none; }
+      .cs-feature-inner, .cs-feature-inner.flip {
+        grid-template-columns: 1fr; text-align: center;
+      }
+      .cs-feature-inner.flip .cs-feature-phone { order: 0; margin: 0 auto; }
+      .cs-feature-phone { margin: 0 auto; }
+      .cs-process-strip { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">Sarvani<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <a class="cs-back" href="index.html">← Back</a>
+
+  <!-- ── HERO ── -->
+  <div class="cs-hero">
+    <div class="cs-hero-tags">
+      <span class="cs-tag">Quick Commerce</span>
+      <span class="cs-tag">Price Comparison</span>
+      <span class="cs-tag">End-to-End</span>
+      <span class="cs-tag">Solo</span>
+    </div>
+    <h1>Reducing grocery shopping<br>comparison time by 42%</h1>
+    <p class="cs-hero-sub">A unified app that compares prices, delivery times, and product info across Zepto, Blinkit, and Instamart — so users make confident decisions in under 2 minutes.</p>
+
+    <div class="cs-hero-phones">
+      <!-- Left phone: category listing -->
+      <div class="cs-hero-phone side">
+        <img src="assets/gb-screen-category.png" alt="GroceryBuddy category listing"
+             style="height:260px;" />
+      </div>
+      <!-- Center phone: homepage -->
+      <div class="cs-hero-phone center">
+        <img src="assets/gb-screen-home.png" alt="GroceryBuddy homepage"
+             style="height:310px;" />
+      </div>
+      <!-- Right phone: success screen -->
+      <div class="cs-hero-phone side">
+        <img src="assets/gb-screen-success.png" alt="Order success"
+             style="height:260px;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── META BAR ── -->
+  <div class="cs-meta-bar">
+    <div class="cs-meta-inner">
+      <div class="cs-meta-item"><label>Role</label><span>Solo UX Designer</span></div>
+      <div class="cs-meta-item"><label>Timeline</label><span>4 Weeks</span></div>
+      <div class="cs-meta-item"><label>Platform</label><span>Mobile (iOS/Android)</span></div>
+      <div class="cs-meta-item"><label>Year</label><span>2025</span></div>
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ── -->
+  <div class="cs-section">
+    <h2>The Problem</h2>
+    <p>The Indian online grocery market is on track to reach $26–27B by 2027. Yet users buying groceries today still open 3 different apps, search the same item 3 times, and manually compare prices in their head — a process that takes 12–15 minutes on average.</p>
+    <p><strong>No single app lets you filter by delivery speed, compare prices side-by-side, and buy from the best option — without leaving the comparison.</strong> GroceryBuddy is that missing layer.</p>
+
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <div class="cs-stat-num">42%</div>
+        <div class="cs-stat-label">Less time comparing — from 12 min to 7 min</div>
+      </div>
+      <div class="cs-stat">
+        <div class="cs-stat-num">68%</div>
+        <div class="cs-stat-label">Of users felt more confident in their purchase</div>
+      </div>
+      <div class="cs-stat">
+        <div class="cs-stat-num">₹850</div>
+        <div class="cs-stat-label">Projected monthly savings per user</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESEARCH ── -->
+  <div class="cs-section" style="padding-bottom: 3.5rem;">
+    <h2>What the research revealed</h2>
+    <p>8 competitive analyses + 4 user interviews surfaced one insight that changed the entire design direction: <strong>45% of users prioritise delivery speed over price when buying urgently</strong> — but no existing app lets you filter by delivery time first. You always have to browse by category or brand.</p>
+
+    <div class="cs-research-cols">
+      <div class="cs-research-col problems">
+        <h4>❌ Current pain</h4>
+        <ul>
+          <li>12–15 min spent comparing across apps</li>
+          <li>57% experience decision fatigue</li>
+          <li>No way to filter by delivery speed</li>
+          <li>Hard to compare different quantities & weights</li>
+        </ul>
+      </div>
+      <div class="cs-research-col needs">
+        <h4>✅ What users need</h4>
+        <ul>
+          <li>Single comparison interface</li>
+          <li>Delivery time as a first-class filter</li>
+          <li>Clear price + quantity context</li>
+          <li>Instant recognition of which app is which</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GALLERY: CORE FLOW ── -->
+  <div class="cs-gallery-wrap">
+    <div class="cs-gallery-label">The Happy Path</div>
+    <div class="cs-gallery-title">Search once. Compare everywhere. Buy in one tap.</div>
+    <div class="cs-gallery-desc">From landing on the homepage to placing an order — the entire journey takes under 2 minutes. No switching apps, no re-searching, no price guesswork.</div>
+    <div class="cs-gallery">
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone">
+          <img src="assets/gb-screen-home.png" alt="Homepage" />
+        </div>
+        <div class="cs-gallery-caption">Homepage</div>
+      </div>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone">
+          <img src="assets/gb-screen-category.png" alt="Category listing" />
+        </div>
+        <div class="cs-gallery-caption">Category listing</div>
+      </div>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone">
+          <img src="assets/gb-screen-product.png" alt="Product detail" />
+        </div>
+        <div class="cs-gallery-caption">Product detail</div>
+      </div>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone">
+          <img src="assets/gb-screen-compare.png" alt="Compare prices" />
+        </div>
+        <div class="cs-gallery-caption">Compare prices</div>
+      </div>
+      <div class="cs-gallery-item">
+        <div class="cs-gallery-phone">
+          <img src="assets/gb-screen-success.png" alt="Order complete" />
+        </div>
+        <div class="cs-gallery-caption">Order complete</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURE 1: DELIVERY FILTER ── -->
+  <div class="cs-feature-wrap">
+    <div class="cs-feature-inner">
+      <div class="cs-feature-text">
+        <span class="cs-feature-badge">Feature 01</span>
+        <h3>Filter by delivery time — before you see prices</h3>
+        <p>45% of users said they need their groceries fast. Traditional apps make you browse to the product page before finding out delivery takes 2 hours. GroceryBuddy flips that — delivery time is a primary filter on the listing page, not buried in product details.</p>
+        <p style="margin-top: 0.8rem;"><strong>Result: 38% faster decisions.</strong> When users can eliminate slow options upfront, they reach their decision in one pass instead of backtracking.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/gb-screen-category.png" alt="Category listing with filters"
+             style="height:380px; object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURE 2: MINIMAL INFO ── -->
+  <div class="cs-feature-wrap" style="background: #f8fafc;">
+    <div class="cs-feature-inner flip">
+      <div class="cs-feature-text">
+        <span class="cs-feature-badge">Feature 02</span>
+        <h3>Only three things on the comparison table</h3>
+        <p>Early designs showed everything — seller info, ratings, reviews, specs. It created exactly the kind of decision fatigue users were already experiencing across apps. The final comparison table shows three things only: <strong>Price · Quantity · Delivery time.</strong></p>
+        <p style="margin-top: 0.8rem;">Anything else is one tap away in the expanded view. The default state drives a <strong>3-second decision</strong> for the majority of purchases.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/gb-screen-compare.png" alt="Comparison table"
+             style="height:380px; object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURE 3: APP LOGOS ── -->
+  <div class="cs-feature-wrap">
+    <div class="cs-feature-inner">
+      <div class="cs-feature-text">
+        <span class="cs-feature-badge">Feature 03 · Design Decision</span>
+        <h3>App logos sit next to product images — not at the bottom</h3>
+        <p>In the first version of the comparison table, platform logos appeared at the very bottom of each column. Users scrolling through prices lost track of which platform they were comparing. A small change — moving logos next to the product image at the top — created instant recognition.</p>
+        <p style="margin-top: 0.8rem;"><strong>Users now identify the platform in under 1 second</strong> without reading. Familiar brand logos do the cognitive work so the user doesn't have to.</p>
+      </div>
+      <div class="cs-feature-phone">
+        <img src="assets/gb-screen-compare.png" alt="Comparison table showing app logo placement"
+             style="height:380px; object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROCESS ── -->
+  <div class="cs-process-wrap">
+    <div class="cs-process-inner">
+      <h2>How I got there</h2>
+      <div class="cs-process-strip">
+        <div class="cs-process-step">
+          <div class="cs-process-num">1</div>
+          <h4>Interviews & competitive analysis</h4>
+          <p>4 user interviews + 8 competitor reviews. Key finding: no app lets users filter by delivery speed first.</p>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-process-num">2</div>
+          <h4>Wireframes & sketches</h4>
+          <p>5+ layout explorations on paper, testing the comparison table format and logo placement.</p>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-process-num">3</div>
+          <h4>Design system</h4>
+          <p>Defined colour, type scale, and component patterns before building screens.</p>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-process-num">4</div>
+          <h4>Prototype & iteration</h4>
+          <p>Built hi-fi prototype, discovered the redirection problem, iterated with a bridging screen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CHALLENGE & PIVOT ── -->
+  <div class="cs-pivot-wrap">
+    <div class="cs-pivot-inner">
+      <div class="cs-pivot-label">Honest Look — Challenge & Pivot</div>
+      <h3>What broke during testing</h3>
+      <p>A user found the best price on Instamart — but didn't have the app installed. Tapping "Buy" dropped them into an empty app store page with no context. They had no idea why they were there or what to do next.</p>
+
+      <div class="cs-pivot-cols">
+        <div class="cs-pivot-col before">
+          <div class="cs-pivot-col-label">Before</div>
+          <h5>Confusing redirect</h5>
+          <p>No context after "Buy" tap. User lands in app store or unknown state — confusion, drop-off.</p>
+        </div>
+        <div class="cs-pivot-col after">
+          <div class="cs-pivot-col-label">After</div>
+          <h5>Guided action</h5>
+          <p>Bridging screen ("Redirecting to Zepto…") + visual indicator if app isn't installed. CTA guides the install before the redirect.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REFLECTION ── -->
+  <div class="cs-reflection-wrap">
+    <div class="cs-reflection-inner">
+      <h2>Reflection</h2>
+      <div class="cs-reflection-bullets">
+        <div class="cs-reflection-bullet">
+          <p><strong>Constraints sharpened the thinking.</strong> Working within a 4-week timeline forced prioritisation — I had to decide what the MVP comparison table needed and cut everything else. That discipline produced a cleaner interface than an unconstrained process might have.</p>
+        </div>
+        <div class="cs-reflection-bullet">
+          <p><strong>The research insight changed everything.</strong> Without user interviews, I would have designed a price-first product. Learning that 45% of users care about delivery speed first completely reoriented the information hierarchy.</p>
+        </div>
+        <div class="cs-reflection-bullet">
+          <p><strong>After wrapping the project, I came back.</strong> With more time and fresh AI tools, I revisited the screens — polishing the visual system and exploring features the first timeline didn't allow. Constraints were a starting point, not the ceiling.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cs-cta-wrap">
+    <p>Want to see the full file — research, wireframes, and hi-fi screens?</p>
+    <div class="cs-cta-btns">
+      <a class="btn btn-primary" href="https://www.figma.com/design/uOordxOEndHUmFwX1V3yml/Gokula-Sai-Sarvani---g2193---GroceryBuddy" target="_blank" rel="noopener">View in Figma ↗</a>
+      <a class="btn btn-outline" href="index.html#projects">← All Projects</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
