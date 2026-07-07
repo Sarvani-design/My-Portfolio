@@ -44,57 +44,26 @@
       max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.65;
     }
 
-    /* ── ANDROID PHONE MOCKUP (shared base) ── */
-    .cs-hero-phone,
-    .cs-gallery-phone,
-    .cs-feature-phone {
-      position: relative;
-      background: #111;
-      border: 3px solid #252525;
-      box-shadow: 0 0 0 1px #1c1c1c, inset 0 0 0 1px rgba(255,255,255,0.04);
-    }
-    /* Camera punch-hole */
-    .cs-hero-phone::before,
-    .cs-gallery-phone::before,
-    .cs-feature-phone::before {
-      content: '';
-      position: absolute;
-      top: 7px; left: 50%; transform: translateX(-50%);
-      width: 9px; height: 9px;
-      background: #050505; border-radius: 50%; z-index: 3;
-    }
-    /* Home indicator bar */
-    .cs-hero-phone::after,
-    .cs-gallery-phone::after,
-    .cs-feature-phone::after {
-      content: '';
-      position: absolute;
-      bottom: 7px; left: 50%; transform: translateX(-50%);
-      width: 35%; height: 3px;
-      background: rgba(255,255,255,0.32); border-radius: 3px;
-    }
-    /* Screen image inside mockup */
+    /* ── PHONE MOCKUP (Android style — clean, no padding) ── */
     .cs-hero-phone img,
     .cs-gallery-phone img,
     .cs-feature-phone img {
       width: 100%; display: block;
-      border-radius: 26px;
-      object-fit: cover; object-position: top;
     }
 
     /* 3 floating phones in hero */
     .cs-hero-phones {
       display: flex; align-items: flex-end; justify-content: center;
-      gap: 1.5rem; width: 100%; max-width: 700px; margin: 0 auto;
+      gap: 1.2rem; width: 100%; max-width: 680px; margin: 0 auto;
     }
     .cs-hero-phone {
-      border-radius: 42px;
-      box-shadow: 0 0 0 1px #1c1c1c, 0 28px 70px rgba(0,0,0,0.3);
-      padding: 16px 8px 22px;
-      flex-shrink: 0;
+      background: #0d0d0d; border-radius: 32px;
+      border: 3px solid #1f1f1f;
+      overflow: hidden; flex-shrink: 0;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px #2a2a2a;
     }
-    .cs-hero-phone.center { width: 210px; transform: translateY(-24px); z-index: 2; }
-    .cs-hero-phone.side   { width: 178px; opacity: 0.88; }
+    .cs-hero-phone.center { width: 200px; transform: translateY(-22px); z-index: 2; }
+    .cs-hero-phone.side   { width: 168px; opacity: 0.88; }
 
     /* ── META BAR ── */
     .cs-meta-bar {
@@ -188,13 +157,14 @@
     .cs-gallery::-webkit-scrollbar { display: none; }
     .cs-gallery-item { flex-shrink: 0; text-align: center; }
     .cs-gallery-phone {
-      width: 190px;
-      border-radius: 38px;
-      box-shadow: 0 0 0 1px #1c1c1c, 0 18px 44px rgba(0,0,0,0.26);
-      padding: 14px 7px 20px;
-      margin-bottom: 0.75rem;
+      width: 180px; height: 390px;
+      background: #0d0d0d; border-radius: 26px;
+      border: 3px solid #1f1f1f;
       overflow: hidden;
+      box-shadow: 0 16px 44px rgba(0,0,0,0.3), 0 0 0 1px #2a2a2a;
+      margin-bottom: 0.75rem;
     }
+    .cs-gallery-phone img { object-fit: cover; object-position: top; height: 100%; }
     .cs-gallery-caption {
       font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
     }
@@ -224,11 +194,11 @@
       padding: 0.25rem 0.7rem; border-radius: 99px; margin-bottom: 0.6rem;
     }
     .cs-feature-phone {
-      width: 240px;
-      border-radius: 44px;
-      box-shadow: 0 0 0 1px #1c1c1c, 0 24px 60px rgba(0,0,0,0.28);
-      padding: 18px 9px 24px;
-      flex-shrink: 0; overflow: hidden;
+      width: 220px;
+      background: #0d0d0d; border-radius: 30px;
+      border: 3.5px solid #1f1f1f;
+      overflow: hidden; flex-shrink: 0;
+      box-shadow: 0 22px 56px rgba(0,0,0,0.32), 0 0 0 1px #2a2a2a;
     }
 
     /* ── PIVOT / CHALLENGE SECTION ── */
@@ -254,12 +224,13 @@
       max-width: 560px; margin-bottom: 2rem;
     }
     .cs-pivot-cols {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
     }
     .cs-pivot-col {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.2rem;
+      border-radius: 16px; padding: 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
     }
+    .cs-pivot-col-text { width: 100%; }
     .cs-pivot-col-label {
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; margin-bottom: 0.5rem;
@@ -271,6 +242,12 @@
       color: var(--text); margin: 0 0 0.35rem;
     }
     .cs-pivot-col p { font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+    .cs-pivot-phone {
+      width: 160px; background: #0d0d0d; border-radius: 22px;
+      border: 3px solid #1f1f1f; overflow: hidden;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.22); flex-shrink: 0;
+    }
+    .cs-pivot-phone img { width: 100%; display: block; }
     @media (max-width: 560px) { .cs-pivot-cols { grid-template-columns: 1fr; } }
 
     /* ── PROCESS STRIP ── */
@@ -367,20 +344,17 @@
     <p class="cs-hero-sub">A unified app that compares prices, delivery times, and product info across Zepto, Blinkit, and Instamart — so users make confident decisions in under 2 minutes.</p>
 
     <div class="cs-hero-phones">
-      <!-- Left phone: category listing -->
+      <!-- Left: delivery time filter (Feature 1) -->
       <div class="cs-hero-phone side">
-        <img src="assets/gb-screen-category.png" alt="GroceryBuddy category listing"
-             style="height:260px;" />
+        <img src="assets/gb-screen-category.png" alt="Delivery time filter" />
       </div>
-      <!-- Center phone: homepage -->
+      <!-- Center: price comparison table (Feature 2) -->
       <div class="cs-hero-phone center">
-        <img src="assets/gb-screen-home.png" alt="GroceryBuddy homepage"
-             style="height:310px;" />
+        <img src="assets/gb-screen-compare.png" alt="Price comparison" />
       </div>
-      <!-- Right phone: success screen -->
+      <!-- Right: homepage -->
       <div class="cs-hero-phone side">
-        <img src="assets/gb-screen-success.png" alt="Order success"
-             style="height:260px;" />
+        <img src="assets/gb-screen-home.png" alt="GroceryBuddy homepage" />
       </div>
     </div>
   </div>
@@ -569,14 +543,24 @@
 
       <div class="cs-pivot-cols">
         <div class="cs-pivot-col before">
-          <div class="cs-pivot-col-label">Before</div>
-          <h5>Confusing redirect</h5>
-          <p>No context after "Buy" tap. User lands in app store or unknown state — confusion, drop-off.</p>
+          <div class="cs-pivot-col-text">
+            <div class="cs-pivot-col-label">Before</div>
+            <h5>Confusing redirect</h5>
+            <p>No context after "Buy" tap. User lands in app store or unknown state — confusion, drop-off.</p>
+          </div>
+          <div class="cs-pivot-phone">
+            <img src="assets/gb-screen-compare.png" alt="Compare screen — Buy button with no redirect context" />
+          </div>
         </div>
         <div class="cs-pivot-col after">
-          <div class="cs-pivot-col-label">After</div>
-          <h5>Guided action</h5>
-          <p>Bridging screen ("Redirecting to Zepto…") + visual indicator if app isn't installed. CTA guides the install before the redirect.</p>
+          <div class="cs-pivot-col-text">
+            <div class="cs-pivot-col-label">After</div>
+            <h5>Guided action</h5>
+            <p>Bridging screen ("Redirecting to Zepto…") + visual indicator if app isn't installed. CTA guides the install before the redirect.</p>
+          </div>
+          <div class="cs-pivot-phone">
+            <img src="assets/gb-screen-redirect.png" alt="Redirecting to Zepto bridging screen" />
+          </div>
         </div>
       </div>
     </div>
