@@ -70,10 +70,51 @@
       <p class="section-label">Selected Work</p>
       <h2 class="section-title">Designing across fintech, social, and commerce.</h2>
 
+      <div class="work-controls">
+        <div class="filter-pills" role="group" aria-label="Filter by build method">
+          <button class="filter-pill active" data-filter="all">All Work</button>
+          <button class="filter-pill" data-filter="vibe">✦ Vibe-Coded</button>
+          <button class="filter-pill" data-filter="figma-ai">Figma + AI</button>
+          <button class="filter-pill" data-filter="figma">Figma</button>
+        </div>
+        <button class="sort-toggle active" id="sortToggle" aria-pressed="true">
+          <span class="sort-toggle-dot"></span><span class="sort-toggle-label">Newest first</span>
+        </button>
+      </div>
+
       <div class="projects-grid">
 
+        <!-- 0. Bun-Wigi Bistro — Vibe Coded, real business -->
+        <div class="project-card" data-build="vibe" data-date="2026-07-20">
+          <div class="card-visual terracotta-grad">
+            <div class="mock-browser">
+              <div class="mock-browser-bar">
+                <span class="mock-dot" style="background:#ff5f57;"></span>
+                <span class="mock-dot" style="background:#febc2e;"></span>
+                <span class="mock-dot" style="background:#28c840;"></span>
+              </div>
+              <img class="mock-browser-screen" src="assets/bunwigi-hero-signage.png" alt="The Bun-Wigi Bistro website hero" loading="lazy" />
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-solo">Solo</span>
+              <span class="badge badge-vibe">✦ Vibe Coded</span>
+              <span class="badge badge-tag">Real Business</span>
+              <span class="badge badge-tag">Web Design</span>
+            </div>
+            <h3>The Bun-Wigi Bistro — Real Restaurant Website</h3>
+            <p class="card-problem">Can a real, 4.7★ restaurant get a web presence that matches its reputation — built by prompting Claude Code directly, no Figma?</p>
+            <p>A full website for an actual Pan-Asian & Continental restaurant in Banjara Hills, Hyderabad — real menu, real Google rating, real reservation and delivery links. Designed and shipped end-to-end via "vibe coding," then pitched to the business.</p>
+            <div class="project-links">
+              <a class="project-link" href="bunwigi-case-study.html">Read Case Study →</a>
+              <a class="project-link-secondary" href="https://bun-wigi.vercel.app/" target="_blank" rel="noopener">View Live Site ↗</a>
+            </div>
+          </div>
+        </div>
+
         <!-- 1. Flow Fintech -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma-ai" data-date="2026-05-15">
           <div class="card-visual blue-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -99,7 +140,7 @@
         </div>
 
         <!-- 2. Instagram Watch History Case Study -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2026-03-10">
           <div class="card-visual purple-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -125,7 +166,7 @@
         </div>
 
         <!-- 3. GroceryBuddy -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2026-01-20">
           <div class="card-visual green-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -151,7 +192,7 @@
         </div>
 
         <!-- 4. Instagram Redesign -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma-ai" data-date="2025-11-05">
           <div class="card-visual ig-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -177,7 +218,7 @@
         </div>
 
         <!-- 5. Airbnb -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2025-09-20">
           <div class="card-visual pink-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -202,7 +243,7 @@
         </div>
 
         <!-- 6. Zepto -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2025-08-01">
           <div class="card-visual zepto-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>

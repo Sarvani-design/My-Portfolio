@@ -105,6 +105,31 @@ h1.hero-name span { color: var(--accent); }
 .indigo-grad { background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%); }
 .ig-grad     { background: linear-gradient(135deg, #F0F4FF 0%, #E8D5FF 100%); }
 .zepto-grad  { background: linear-gradient(135deg, #F5F0FF 0%, #DDD6FE 100%); }
+.terracotta-grad { background: linear-gradient(135deg, #FDECD8 0%, #F3D2B0 100%); }
+
+/* ── WORK FILTER + SORT CONTROLS ── */
+.work-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
+.filter-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.filter-pill {
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+  padding: 0.5rem 1.1rem; border-radius: 99px; border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+}
+.filter-pill:hover { border-color: var(--accent); color: var(--text); }
+.filter-pill.active { background: var(--text); color: #fff; border-color: var(--text); }
+.sort-toggle {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
+  background: var(--surface); border: 1.5px solid var(--border);
+  padding: 0.5rem 1rem; border-radius: 99px; cursor: pointer; transition: all 0.2s;
+}
+.sort-toggle:hover { border-color: var(--accent); }
+.sort-toggle.active { color: var(--accent-dark); border-color: var(--accent); background: var(--accent-light); }
+.sort-toggle-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.project-card[hidden] { display: none; }
+@media (max-width: 640px) {
+  .work-controls { flex-direction: column; align-items: flex-start; }
+}
 
 /* CSS phone device frame */
 .mock-phone {
@@ -157,6 +182,7 @@ h1.hero-name span { color: var(--accent); }
 .badge-solo   { background: #DCFCE7; color: #166534; }
 .badge-group  { background: #FEF9C3; color: #854D0E; }
 .badge-ai     { background: rgba(139,92,246,0.1); color: #7C3AED; }
+.badge-vibe   { background: rgba(184,90,40,0.12); color: #B85A28; }
 .badge-tag    { background: var(--accent-light); color: var(--accent-dark); }
 .project-card h3 { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); margin-bottom: 0.4rem; }
 .card-problem { font-size: 0.82rem; font-weight: 600; color: var(--accent-dark); font-style: italic; margin-bottom: 0.55rem !important; }
