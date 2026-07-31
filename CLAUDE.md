@@ -20,6 +20,8 @@ A static HTML/CSS/JS portfolio for Sarvani Vulavalapudi (UX/Product Designer). N
 | `instagram-case-study.html` | Solo, single-constraint feature design ("zero new patterns"), purple/dark |
 | `instagram-redesign-case-study.html` | Solo, all-black/AI-feature variant, purple `#7c3aed` |
 | `bunwigi-case-study.html` | Solo, **Vibe-Coded** (Claude Code, no Figma), terracotta `#B85A28` + olive `#2F3E2E` — **the reference for a website project** (browser-frame mockups instead of phone frames; see below) |
+| `jaqueline-case-study.html` | Solo, **Vibe-Coded**, rust `#AC5639` — real bilingual (EN/ES) family florist; the language-switcher feature came directly from the business's real customer base, not a generic pattern |
+| `virasat-case-study.html` | Solo, **Vibe-Coded**, wine `#762D39` on mostly-black sections — real restaurant with 2,373 reviews; shows the theme adapting to a source site that's genuinely darker/moodier than Bun-Wigi or Jaquelines, not forced into the same light layout |
 | `assets/` | Screenshots, prefixed per project: `zepto-*`, `gb-*` (GroceryBuddy), `flow-*`, `airbnb-*`, `ig-*` / `insta-wh-*` (Instagram) |
 | `assets/case-study-template.html` | **Start here for a new case study.** A real, blank skeleton with all 13 sections stubbed out and `[TODO]` placeholders — copy it to the repo root and fill it in, rather than reconstructing structure from this checklist each time. |
 
@@ -65,6 +67,8 @@ Each case study picks ONE accent color/gradient tied to the brand or concept, th
 - Flow → teal (matches global `--accent: #14B8A6`) with a light blue/mint hero gradient
 - Instagram (both case studies) → purple `#a855f7` / `#7c3aed` on a near-black gradient
 - Bun-Wigi → terracotta `#B85A28` + olive `#2F3E2E` on cream `#F3EAD8` / near-black `#0f0f0e` hero (pulled directly from the live site's own CSS tokens, not invented)
+- Jaquelines Flowers → rust `#AC5639` on cream `#FCFAF8`, small-text-safe variant `#8A4229`
+- Virasat → wine `#762D39` on **mostly-black** sections (the real site itself is black-heavy — don't default to a light layout just because other case studies are lighter)
 
 Don't reuse another project's exact class names — write a fresh `<style>` block per file, even though the *sections* it defines follow the same skeleton above.
 
@@ -74,8 +78,9 @@ Every `.project-card` in `index.html` carries two data attributes that drive the
 
 - `data-build` — one of three tiers: `"vibe"` (prompted directly in Claude Code, no Figma step at all — currently only Bun-Wigi), `"figma-ai"` (built in Figma but with an AI tool in the loop — Google Stitch, Figma AI Agents; these already carry the `badge-ai` badge), or `"figma"` (manual Figma/FigJam, no AI tool — the rest).
 - `data-date` — an ISO date used only as an internal sort key for the "Newest first" toggle. It is never displayed in the UI, so it doesn't need to be a verified real date — just keep new projects' dates later than existing ones so they sort to the front.
+- `data-curated` — a separate numeric rank (1, 2, 3…) used only by "Curated order". **This must NOT just mirror where the card sits in the HTML.** New cards get inserted at the top of the DOM so "Newest first" looks right even before JS runs — if `data-curated` isn't set deliberately (or `curatedOrder` in `script.js` falls back to raw DOM order), "Curated order" silently becomes identical to "Newest first" and the toggle looks broken. Give new cards the next-highest `data-curated` number (i.e. append them to the end of the curated ranking) unless you actually intend to feature one early.
 
-**When adding a new case study, tag its card with both attributes** and add `badge-vibe` (terracotta) or reuse `badge-ai` (purple) if it fits one of those tiers — plain Figma projects need no extra badge, just the `data-build="figma"` attribute.
+**When adding a new case study, tag its card with all three attributes** and add `badge-vibe` (terracotta) or reuse `badge-ai` (purple) if it fits one of those tiers — plain Figma projects need no extra badge, just the `data-build="figma"` attribute.
 
 ## Adding a new case study — steps
 

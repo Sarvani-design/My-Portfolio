@@ -20,10 +20,14 @@ sections.forEach(s => observer.observe(s));
   if (!grid) return;
 
   const cards = Array.from(grid.querySelectorAll('.project-card'));
-  const curatedOrder = cards.slice(); // original hand-picked DOM order
+  // Curated order is its own explicit ranking (data-curated), independent of
+  // where a card happens to sit in the HTML — new cards get inserted at the
+  // top of the DOM (so "Newest first" looks right without JS), which used to
+  // make "Curated order" silently identical to "Newest first". Sorting by
+  // data-curated here keeps the two modes genuinely different.
+  const curatedOrder = cards.slice().sort((a, b) => (+a.dataset.curated || 0) - (+b.dataset.curated || 0));
   const pills = document.querySelectorAll('.filter-pill');
-  const sortBtn = document.getElementById('sortToggle');
-  const sortLabel = sortBtn ? sortBtn.querySelector('.sort-toggle-label') : null;
+  const sortPills = document.querySelectorAll('.sort-pill');
 
   let activeFilter = 'all';
   let newestFirst = true;
@@ -51,15 +55,14 @@ sections.forEach(s => observer.observe(s));
     });
   });
 
-  if (sortBtn) {
-    sortBtn.addEventListener('click', () => {
-      newestFirst = !newestFirst;
-      sortBtn.classList.toggle('active', newestFirst);
-      sortBtn.setAttribute('aria-pressed', String(newestFirst));
-      if (sortLabel) sortLabel.textContent = newestFirst ? 'Newest first' : 'Curated order';
+  sortPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      sortPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      newestFirst = pill.dataset.sort === 'newest';
       applySort();
     });
-  }
+  });
 
   applySort();
 })();
