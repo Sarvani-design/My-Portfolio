@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Bun-Wigi Bistro — Vibe-Coded Case Study · Sarvani Vulavalapudi</title>
+  <meta name="description" content="Case study: a real restaurant website for The Bun-Wigi Bistro in Banjara Hills, Hyderabad — built by vibe coding in the Claude Code VS Code extension from real Google Maps data and a reference template." />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Zilla+Slab:wght@600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Vibe Coding theme: terracotta #B85A28 + olive #2F3E2E + cream #F3EAD8 ──
+       tokens pulled directly from the live site at bun-wigi.vercel.app.
+       Small label text uses a darkened terracotta (#96461F) on light backgrounds
+       for AA contrast; the brighter #B85A28 is reserved for buttons/borders/dark-bg text. */
+
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.7);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 80px; left: 2rem; z-index: 10;
+    }
+    .cs-back:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .cs-hero {
+      min-height: 80vh;
+      background: #0f0f0e linear-gradient(160deg, #0f0f0e 0%, #1a1510 50%, #22190f 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 7rem 2rem 4rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cs-hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(184,90,40,0.28); border: 1px solid rgba(184,90,40,0.5);
+      color: #f0bd93; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 1.4rem;
+    }
+    .cs-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.9rem, 4.8vw, 3.2rem);
+      font-weight: 800; color: #fff; line-height: 1.15;
+      letter-spacing: -0.03em; margin-bottom: 0.9rem; max-width: 700px;
+    }
+    .cs-hero h1 em { font-style: normal; color: #e2a06a; }
+    .cs-hero-sub {
+      font-size: clamp(0.9rem, 1.4vw, 1rem);
+      color: rgba(255,255,255,0.72); max-width: 520px; line-height: 1.65; margin-bottom: 2.5rem;
+    }
+
+    /* ── BROWSER-FRAME MOCKUP (reused for every screen recreation) ── */
+    .bw-browser {
+      width: 100%; max-width: 480px; border-radius: 12px; overflow: hidden;
+      background: #fff; box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+    }
+    .bw-browser-bar { height: 30px; background: #e8e2d6; display: flex; align-items: center; gap: 6px; padding: 0 10px; }
+    .bw-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .bw-dot.red { background: #ff5f57; } .bw-dot.yellow { background: #febc2e; } .bw-dot.green { background: #28c840; }
+    .bw-browser-url {
+      margin-left: 8px; font-size: 0.68rem; color: #4b5563; background: #fff;
+      border-radius: 6px; padding: 3px 10px; flex: 1; text-align: left; font-family: 'DM Sans', sans-serif;
+    }
+    .bw-hero-recreate {
+      background-image: url('assets/bunwigi-hero-signage.png');
+      background-color: #1a1510; background-size: cover; background-position: center;
+      min-height: 260px; display: flex; align-items: flex-end; padding: 1.4rem;
+      position: relative;
+    }
+    .bw-hero-recreate::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.05) 100%);
+    }
+    .bw-hero-recreate-inner { position: relative; text-align: left; color: #fff; }
+    .bw-hero-recreate-inner .bw-mini-h1 {
+      font-family: 'Anton', sans-serif; font-size: 1.5rem; line-height: 1.05;
+      letter-spacing: 0.01em; margin-bottom: 0.6rem;
+    }
+    .bw-hero-rating { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; color: #fff; margin-bottom: 0.5rem; font-weight: 600; }
+    .bw-hero-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.9rem; }
+    .bw-btn { font-size: 0.62rem; font-weight: 700; padding: 0.42rem 0.8rem; border-radius: 99px; font-family: 'DM Sans', sans-serif; }
+    .bw-btn.terracotta { background: #d97b3f; color: #1a1510; }
+    .bw-btn.olive { background: #4a5d47; color: #fff; }
+    .bw-btn.dark { background: #fff; color: #1a1510; }
+
+    /* ── META BAR ── */
+    .cs-meta-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.4rem 2rem; }
+    .cs-meta-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.2rem; }
+    .cs-meta-item label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .cs-meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+    .cs-meta-item a { color: #96461f; font-weight: 600; text-decoration: none; }
+    .cs-meta-item a:hover { text-decoration: underline; }
+
+    /* ── SECTION ── */
+    .cs-section { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 0; }
+    .cs-section h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.7rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .cs-section h2::before { content: ''; display: inline-block; width: 3px; height: 1.1em; background: #b85a28; border-radius: 2px; flex-shrink: 0; }
+    .cs-section p { color: var(--text-muted); line-height: 1.7; margin-bottom: 0.5rem; font-size: 0.93rem; }
+    .cs-section p:last-child { margin-bottom: 0; }
+    .cs-section strong { color: var(--text); font-weight: 600; }
+
+    /* ── CORE FLOW (compact icon steps) ── */
+    .cs-flow-wrap { padding: 3rem 2rem; background: #faf7f2; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cs-flow-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .cs-flow-inner h2 { font-family: 'Sora', sans-serif; font-size: clamp(1.25rem,2.6vw,1.6rem); font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1.8rem; }
+    .cs-flow-steps { display: flex; align-items: flex-start; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .cs-flow-step { width: 135px; }
+    .cs-flow-icon {
+      width: 46px; height: 46px; border-radius: 12px; margin: 0 auto 0.6rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+      background: rgba(184,90,40,0.1); border: 1px solid rgba(184,90,40,0.25);
+    }
+    .cs-flow-step strong { display: block; font-size: 0.8rem; color: var(--text); margin-bottom: 0.2rem; }
+    .cs-flow-step p { font-size: 0.73rem; color: var(--text-muted); line-height: 1.4; margin: 0; }
+    .cs-flow-arrow { font-size: 1.1rem; color: #c99568; margin-top: 1.2rem; flex-shrink: 0; }
+
+    /* ── FEATURE DEEP DIVE ── */
+    .feature-section { border-top: 1px solid var(--border); }
+    .feature-wrap { max-width: 940px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; align-items: center; }
+    .feature-wrap.reverse { grid-template-columns: 340px 1fr; }
+    .feature-wrap.reverse .feature-visual { order: -1; }
+    .feature-wrap h3 { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; letter-spacing: -0.01em; line-height: 1.3; }
+    .feature-wrap p { color: #374151; line-height: 1.7; font-size: 0.9rem; margin-bottom: 0.6rem; }
+    .feature-wrap p:last-child { margin-bottom: 0; }
+
+    /* ── RECREATED MENU + REVIEWS COMPONENTS (real HTML/CSS, not screenshots) ── */
+    .bw-menu-recreate-body { background: #f3ead8; padding: 1.1rem; }
+    .bw-menu-cats { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .bw-cat-pill { font-size: 0.65rem; font-weight: 500; padding: 0.32rem 0.65rem; border-radius: 99px; background: #fffdfa; color: #2c2c29; font-family: 'DM Sans', sans-serif; }
+    .bw-cat-pill.active { background: #b85a28; color: #fff; font-weight: 600; }
+    .bw-veg-filter { display: flex; gap: 0.4rem; margin-bottom: 0.9rem; }
+    .bw-veg-pill { font-size: 0.65rem; font-weight: 600; padding: 0.28rem 0.6rem; border-radius: 6px; font-family: 'DM Sans', sans-serif; }
+    .bw-veg-pill.all { background: #1a1a18; color: #fff; }
+    .bw-veg-pill.veg { background: #dceade; color: #1b3d1e; }
+    .bw-veg-pill.nonveg { background: #f7ddc9; color: #8a3d10; }
+    .bw-menu-item { background: #fffdfa; border-radius: 10px; padding: 0.65rem 0.85rem; margin-bottom: 0.45rem; }
+    .bw-menu-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.15rem; }
+    .bw-menu-item-name { font-family: 'Zilla Slab', serif; font-weight: 600; font-size: 0.83rem; color: #1a1a18; }
+    .bw-menu-item-tag { font-size: 0.58rem; font-weight: 700; background: #dceade; color: #1b3d1e; padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .bw-menu-item p { font-size: 0.72rem; color: #4b5563; margin: 0; font-family: 'DM Sans', sans-serif; }
+
+    .bw-reviews-body { background: #fffdfa; padding: 1.1rem; }
+    .bw-reviews-score { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.9rem; }
+    .bw-reviews-score strong { font-family: 'Anton', sans-serif; font-size: 1.6rem; color: #1a1a18; }
+    .bw-reviews-score span { font-size: 0.72rem; color: #4b5563; }
+    .bw-review-quote { background: #f9f7f2; border-left: 3px solid #b85a28; border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.78rem; color: #2c2c29; line-height: 1.5; font-style: italic; }
+    .bw-review-quote:last-child { margin-bottom: 0; }
+
+    /* ── DISH / PHOTO CARD ── */
+    .bw-dish-card, .bw-photo-card { border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+    .bw-dish-card img, .bw-photo-card img { width: 100%; display: block; }
+    .bw-dish-card-body { background: #fffdfa; padding: 0.9rem 1.1rem; }
+    .bw-dish-tag { font-size: 0.62rem; font-weight: 700; color: #96461f; text-transform: uppercase; letter-spacing: 0.08em; }
+    .bw-dish-card-body h4 { font-family: 'Zilla Slab', serif; font-size: 1rem; color: #1a1a18; margin: 0.25rem 0; }
+    .bw-dish-card-body p { font-size: 0.78rem; color: #4b5563; margin: 0; }
+
+    /* ── DESIGN DECISIONS ── */
+    .cs-decisions { max-width: 900px; margin: 0 auto; padding: 3.5rem 2rem; }
+    .cs-decisions-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #96461f; display: block; margin-bottom: 0.5rem; }
+    .cs-decisions h2 { font-family: 'Sora', sans-serif; font-size: clamp(1.25rem,2.6vw,1.6rem); font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .decisions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.6rem; }
+    .decision-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.3rem; border-left: 3px solid #b85a28; }
+    .decision-q { font-size: 0.76rem; font-weight: 700; color: #96461f; margin-bottom: 0.4rem; }
+    .decision-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.45rem; }
+    .decision-card p { font-size: 0.82rem; color: #4b5563; line-height: 1.55; margin: 0; }
+
+    /* ── PROCESS ── */
+    .cs-process-wrap { background: #0f0f0e; padding: 3.5rem 2rem; border-top: 1px solid #1e1a15; }
+    .cs-process-inner { max-width: 900px; margin: 0 auto; }
+    .cs-process-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f0bd93; display: block; margin-bottom: 0.5rem; }
+    .cs-process-inner h2 { color: #fff; font-family: 'Sora', sans-serif; font-size: clamp(1.25rem,2.6vw,1.6rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .process-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; margin-top: 2rem; }
+    .process-step { text-align: center; }
+    .process-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(184,90,40,0.18); border: 1px solid rgba(184,90,40,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; margin: 0 auto 0.6rem;
+    }
+    .process-step h4 { font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+    .process-step p { font-size: 0.76rem; color: rgba(255,255,255,0.62); line-height: 1.5; margin: 0; }
+
+    /* ── REFLECTION ── */
+    .cs-reflection { background: #1a1510; padding: 3.5rem 2rem; border-top: 1px solid #1e1a15; }
+    .cs-reflection-inner { max-width: 920px; margin: 0 auto; text-align: center; }
+    .cs-reflection-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f0bd93; display: block; margin-bottom: 0.5rem; }
+    .cs-reflection-inner h2 { color: #fff; margin-bottom: 1.6rem; font-family: 'Sora', sans-serif; font-size: clamp(1.25rem,2.6vw,1.6rem); font-weight: 800; letter-spacing: -0.02em; }
+    .reflection-bullets { list-style: none; padding: 0; margin: 0; text-align: left; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .reflection-bullets li.span-full { grid-column: 1 / -1; }
+    .reflection-bullets li {
+      display: flex; gap: 0.7rem; align-items: flex-start; color: rgba(255,255,255,0.8);
+      font-size: 0.88rem; line-height: 1.6; padding: 1.1rem 1.2rem;
+      background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.09); border-radius: 12px;
+    }
+    .reflection-bullets li::before { content: '✦'; color: #e2a06a; flex-shrink: 0; margin-top: 0.15rem; font-size: 0.75rem; }
+    .reflection-bullets li strong { color: #fff; }
+    @media (max-width: 640px) { .reflection-bullets { grid-template-columns: 1fr; } }
+
+    /* ── CTA ── */
+    .cs-cta { padding: 4rem 2rem; text-align: center; background: #fff; border-top: 1px solid var(--border); }
+    .cs-cta h2 { font-family: 'Sora', sans-serif; font-size: clamp(1.3rem,2.8vw,1.9rem); font-weight: 800; color: var(--text); margin-bottom: 0.6rem; letter-spacing: -0.02em; }
+    .cs-cta p { color: var(--text-muted); margin-bottom: 1.6rem; font-size: 0.93rem; }
+    .cs-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cs-btn-primary { background: #b85a28; color: #fff; padding: 0.75rem 1.7rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: background 0.2s; }
+    .cs-btn-primary:hover { background: #96461f; }
+    .cs-btn-secondary { background: transparent; color: var(--text); border: 1.5px solid var(--border); padding: 0.75rem 1.7rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: border-color 0.2s, color 0.2s; }
+    .cs-btn-secondary:hover { border-color: #b85a28; color: #96461f; }
+
+    @media (max-width: 780px) {
+      .feature-wrap, .feature-wrap.reverse { grid-template-columns: 1fr; text-align: center; }
+      .feature-wrap.reverse .feature-visual { order: 0; }
+      .feature-visual { max-width: 360px; margin: 0 auto; }
+      .decisions-grid { grid-template-columns: 1fr; }
+      .process-strip { grid-template-columns: repeat(2,1fr); }
+      .cs-flow-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">Sarvani<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <a class="cs-back" href="index.html">← Back</a>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <span class="cs-hero-tag">✦ Vibe Coding · Claude Code · Real Business</span>
+    <h1>A real restaurant, <em>vibe-coded</em></h1>
+    <p class="cs-hero-sub">A website for an actual restaurant in Banjara Hills, Hyderabad — built in the Claude Code VS Code extension from real Google Maps data and a reference template, then pitched to the owners.</p>
+
+    <div class="bw-browser">
+      <div class="bw-browser-bar">
+        <span class="bw-dot red"></span><span class="bw-dot yellow"></span><span class="bw-dot green"></span>
+        <span class="bw-browser-url">bun-wigi.vercel.app</span>
+      </div>
+      <div class="bw-hero-recreate">
+        <div class="bw-hero-recreate-inner">
+          <div class="bw-hero-rating">★ 4.7 · 206 Google reviews</div>
+          <div class="bw-mini-h1">THE BUN WIGI BISTRO</div>
+          <div class="bw-hero-btns">
+            <span class="bw-btn terracotta">Reserve a Table</span>
+            <span class="bw-btn olive">Order Online</span>
+            <span class="bw-btn dark">Directions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- META BAR -->
+  <div class="cs-meta-bar">
+    <div class="cs-meta-inner">
+      <div class="cs-meta-item"><label>Role</label><span>Solo — Sourcing, Prompting &amp; Code</span></div>
+      <div class="cs-meta-item"><label>Build Method</label><span>Vibe-Coded — Claude Code (VS Code ext.)</span></div>
+      <div class="cs-meta-item"><label>Source Data</label><span>Real Google Maps listing</span></div>
+      <div class="cs-meta-item"><label>Status</label><span>Live concept — pitched, not yet adopted</span></div>
+      <div class="cs-meta-item"><label>Live Site</label><span><a href="https://bun-wigi.vercel.app/" target="_blank" rel="noopener">bun-wigi.vercel.app ↗</a></span></div>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM -->
+  <section class="cs-section">
+    <h2>A 4.7★ restaurant with no page of its own</h2>
+    <p>The Bun-Wigi Bistro is a real, well-reviewed restaurant in Banjara Hills — 4.7 stars across 206 Google reviews. Search for it and you land on a Maps pin, never a page that shows the ambience, the menu, or why 206 people bothered to review it.</p>
+    <p><strong>How might a small, already-loved business get a web presence that matches its reputation — sourced from data that already exists about it?</strong></p>
+  </section>
+
+  <!-- CORE FLOW -->
+  <div class="cs-flow-wrap">
+    <div class="cs-flow-inner">
+      <h2>One page, five jobs</h2>
+      <div class="cs-flow-steps">
+        <div class="cs-flow-step">
+          <div class="cs-flow-icon">👋</div>
+          <strong>Hero</strong>
+          <p>Name, rating, three real actions.</p>
+        </div>
+        <div class="cs-flow-arrow">→</div>
+        <div class="cs-flow-step">
+          <div class="cs-flow-icon">📖</div>
+          <strong>Story</strong>
+          <p>Food and room, in two lines.</p>
+        </div>
+        <div class="cs-flow-arrow">→</div>
+        <div class="cs-flow-step">
+          <div class="cs-flow-icon">🍜</div>
+          <strong>Menu</strong>
+          <p>15 categories, Veg/Non-Veg filter.</p>
+        </div>
+        <div class="cs-flow-arrow">→</div>
+        <div class="cs-flow-step">
+          <div class="cs-flow-icon">🛵</div>
+          <strong>Order</strong>
+          <p>Out to Swiggy or Zomato.</p>
+        </div>
+        <div class="cs-flow-arrow">→</div>
+        <div class="cs-flow-step">
+          <div class="cs-flow-icon">📍</div>
+          <strong>Visit</strong>
+          <p>Address, hours, directions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE 1: REAL CTAs -->
+  <div class="feature-section">
+    <div class="feature-wrap">
+      <div class="feature-text">
+        <h3>Three working actions, not three decorative buttons</h3>
+        <p>Reserve a Table deep-links into the restaurant's real Google reservation flow. Order Online routes to Swiggy and Zomato. Directions opens real navigation. Nothing here is a placeholder — a diner could actually use this today.</p>
+      </div>
+      <div class="feature-visual bw-dish-card">
+        <img src="assets/bunwigi-hero-signage.png" alt="The Bun-Wigi Bistro backlit signage at night" />
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE 2: RECREATED MENU COMPONENT -->
+  <div class="feature-section" style="background:#fafafa;">
+    <div class="feature-wrap reverse">
+      <div class="feature-visual bw-browser">
+        <div class="bw-browser-bar">
+          <span class="bw-dot red"></span><span class="bw-dot yellow"></span><span class="bw-dot green"></span>
+          <span class="bw-browser-url">bun-wigi.vercel.app/#menu</span>
+        </div>
+        <div class="bw-menu-recreate-body">
+          <div class="bw-menu-cats">
+            <span class="bw-cat-pill active">Soup</span>
+            <span class="bw-cat-pill">Noodles</span>
+            <span class="bw-cat-pill">Dim Sum</span>
+            <span class="bw-cat-pill">Bao</span>
+            <span class="bw-cat-pill">Sushi</span>
+          </div>
+          <div class="bw-veg-filter">
+            <span class="bw-veg-pill all">All</span>
+            <span class="bw-veg-pill veg">Veg</span>
+            <span class="bw-veg-pill nonveg">Non-Veg</span>
+          </div>
+          <div class="bw-menu-item">
+            <div class="bw-menu-item-top"><span class="bw-menu-item-name">Suan La Tang</span><span class="bw-menu-item-tag">VEG</span></div>
+            <p>Spicy Sichuan hot &amp; sour soup.</p>
+          </div>
+          <div class="bw-menu-item">
+            <div class="bw-menu-item-top"><span class="bw-menu-item-name">Burma Express</span><span class="bw-menu-item-tag">VEG</span></div>
+            <p>Burmese-style hot soup with crushed samosa.</p>
+          </div>
+        </div>
+      </div>
+      <div class="feature-text">
+        <h3>15 tap-able categories, not a photographed menu card</h3>
+        <p>Most small restaurants "put the menu online" by photographing the physical card — unreadable on mobile, unfilterable. This one is 15 real categories with a Veg/Non-Veg filter, matching how people actually narrow down food choices.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE 3: SIGNATURE DISHES -->
+  <div class="feature-section">
+    <div class="feature-wrap">
+      <div class="feature-text">
+        <h3>Four dishes, surfaced before the full menu</h3>
+        <p>Before the 15-category menu, the site leads with four signature dishes — real dish photos and names pulled straight from the business's own listing. Build appetite first, ask for a decision second.</p>
+      </div>
+      <div class="feature-visual bw-dish-card">
+        <img src="assets/bunwigi-dish-dumplings.png" alt="Chef's Special Dumplings — blue-dough dumplings with orange roe" />
+        <div class="bw-dish-card-body">
+          <div class="bw-dish-tag">Dim Sum</div>
+          <h4>Chef's Special Dumplings</h4>
+          <p>Blue-dough dumplings finished with orange roe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE 4: AMBIENCE + REVIEWS -->
+  <div class="feature-section" style="background:#fafafa;">
+    <div class="feature-wrap reverse">
+      <div class="feature-visual bw-photo-card">
+        <img src="assets/bunwigi-interior.png" alt="Table set beneath glowing paper lanterns inside The Bun-Wigi's dining room" />
+      </div>
+      <div class="feature-text">
+        <h3>What a menu can't tell you</h3>
+        <p>Whether the room suits a date night or a birthday is usually the real deciding factor. Real interior photography answers that in a way a menu never can.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE 5: REVIEWS RECREATE -->
+  <div class="feature-section">
+    <div class="feature-wrap">
+      <div class="feature-text">
+        <h3>206 real reviews, not placeholder testimonials</h3>
+        <p>Every quote here is a real Google review, copied straight from the Maps listing along with the 4.7★ score. Earned reputation, not stock-photo warmth.</p>
+      </div>
+      <div class="feature-visual bw-browser">
+        <div class="bw-browser-bar">
+          <span class="bw-dot red"></span><span class="bw-dot yellow"></span><span class="bw-dot green"></span>
+          <span class="bw-browser-url">bun-wigi.vercel.app/#reviews</span>
+        </div>
+        <div class="bw-reviews-body">
+          <div class="bw-reviews-score"><strong>4.7★</strong><span>206 Google reviews</span></div>
+          <div class="bw-review-quote">"Awesome place... lovely ambience, friendly staff, great service and yum food."</div>
+          <div class="bw-review-quote">"Every item we ordered was fresh, well-cooked, and full of flavour."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESIGN DECISIONS -->
+  <section class="cs-decisions">
+    <span class="cs-decisions-label">Design Decisions</span>
+    <h2>The thinking behind the choices</h2>
+    <div class="decisions-grid">
+      <div class="decision-card">
+        <div class="decision-q">Why start from a reference site instead of a blank prompt?</div>
+        <h4>Vibe coding needs an anchor</h4>
+        <p>A reference restaurant website gave Claude Code a proven layout to adapt, instead of inventing information architecture from a blank page.</p>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q">Why source data from Google Maps instead of writing copy?</div>
+        <h4>Real data makes it a real pitch</h4>
+        <p>The name, reviews, rating, and address were copied straight from Bun-Wigi's actual Maps listing — grounding the whole site in a real, findable business.</p>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q">Why not build ordering or booking into the site?</div>
+        <h4>Reuse what's already trusted</h4>
+        <p>The business already delivers through Swiggy/Zomato and takes reservations through Google. Duplicating either would be scope creep with no upside.</p>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q">Why terracotta + olive instead of a generic food-app palette?</div>
+        <h4>Match the room, not the category</h4>
+        <p>The palette comes from the restaurant's own lantern-lit, wood-and-greenery interior — closer to the actual dining room than a generic red/orange delivery-app look.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <div class="cs-process-wrap">
+    <div class="cs-process-inner">
+      <span class="cs-process-label">The Process</span>
+      <h2>How it actually got built</h2>
+      <div class="process-strip">
+        <div class="process-step">
+          <div class="process-icon">
+            <img src="https://cdn.simpleicons.org/googlemaps/4285F4" alt="" style="width:22px;height:22px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+            <span style="display:none;">🗺️</span>
+          </div>
+          <h4>Sourced on Maps</h4>
+          <p>Searched Google Maps for a real Hyderabad business with no website. Copied its full listing — reviews and all.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">📄</div>
+          <h4>Reference Template</h4>
+          <p>Started from an existing restaurant website as the structural template, not a blank page.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">💬</div>
+          <h4>Vibe Coded</h4>
+          <p>Pasted the real listing into the Claude Code extension in VS Code and prompted it to adapt the template around this business.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">🚀</div>
+          <h4>Shipped &amp; Pitched</h4>
+          <p>A few follow-up prompts for business-specific touches — the menu filter, the Reviews section — then deployed and pitched to the owners.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div class="cs-reflection">
+    <div class="cs-reflection-inner">
+      <span class="cs-reflection-label">Reflection</span>
+      <h2>What this project taught me</h2>
+      <ul class="reflection-bullets">
+        <li><strong>Real data beats a blank prompt.</strong> Starting from an actual Maps listing and a reference template got further, faster, than describing a restaurant from imagination.</li>
+        <li><strong>Getting the aesthetics right took real iteration.</strong> The terracotta-and-olive palette and the Anton/Zilla Slab/DM Sans pairing didn't come out of the first prompt — it took several rounds of "warmer," "less rounded," "not that orange" before it felt intentional rather than default vibe-coded output.</li>
+        <li><strong>It hasn't been adopted — and that's real information.</strong> I reached out to the actual restaurant; they haven't taken it up yet. Pitching an unsolicited redesign is a different problem than being briefed for one.</li>
+        <li><strong>What I'm proudest of:</strong> every CTA works today — a real reservation link, real delivery links, a real map pin.</li>
+        <li class="span-full"><strong>What I'd do differently:</strong> get their actual menu file and photo rights before building, instead of working from what's publicly visible on Maps.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cs-cta">
+    <h2>See the live site</h2>
+    <p>The real, deployed version — reservations, menu, and directions all functional.</p>
+    <div class="cs-cta-btns">
+      <a class="cs-btn-primary" href="https://bun-wigi.vercel.app/" target="_blank" rel="noopener">View Live Site ↗</a>
+      <a class="cs-btn-secondary" href="index.html#projects">← Back to Work</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

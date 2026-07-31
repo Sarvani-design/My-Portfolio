@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Project Name] — Case Study · Sarvani Vulavalapudi</title>
+  <meta name="description" content="Case study: [one-sentence summary of what was designed and why]." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       TEMPLATE — see ../CLAUDE.md before using this file.
+       1. Pick ONE accent color for this project (tied to the brand
+          or concept) and apply it everywhere below marked ACCENT.
+       2. Copy this file to [project-name]-case-study.html at the
+          repo root (not inside /assets), then fill in every [TODO].
+       3. Delete this comment block when done.
+       ═══════════════════════════════════════════════════════════ */
+
+    .cs-back {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 80px; left: 2rem; z-index: 10;
+    }
+    .cs-back:hover { color: var(--accent); } /* or a light color if hero bg is dark */
+
+    /* ── HERO ── */
+    .cs-hero {
+      min-height: 82vh;
+      background: linear-gradient(145deg, /* ACCENT gradient, e.g. #ede9fe 0%, #c4b5fd 100% */);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 7rem 2rem 3rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cs-hero-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.2rem; }
+    .cs-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.8rem; border-radius: 99px;
+      background: rgba(0,0,0,0.08); color: #333; /* ACCENT */
+    }
+    .cs-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      color: var(--text); line-height: 1.15; margin-bottom: 0.8rem;
+    }
+    .cs-hero-sub {
+      font-size: 1.05rem; color: var(--text-muted);
+      max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.65;
+    }
+    .cs-hero-phones { display: flex; align-items: flex-end; justify-content: center; gap: 1.2rem; width: 100%; max-width: 640px; margin: 0 auto; }
+    .cs-hero-phone { background: #1a1a1a; border-radius: 28px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.25); flex-shrink: 0; }
+    .cs-hero-phone.center { width: 175px; transform: translateY(-20px); z-index: 2; }
+    .cs-hero-phone.side   { width: 148px; opacity: 0.85; }
+    .cs-hero-phone img { width: 100%; display: block; }
+
+    /* ── META BAR ── */
+    .cs-meta-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.4rem 2rem; }
+    .cs-meta-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.2rem; }
+    .cs-meta-item label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .cs-meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+
+    /* ── SECTION WRAPPER (Problem / Opportunity / Who) ── */
+    .cs-section { max-width: 800px; margin: 0 auto; padding: 3.5rem 2rem 0; }
+    .cs-section h2 {
+      font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .cs-section h2::before { content: ''; display: inline-block; width: 3px; height: 1.1em; background: #7c3aed; /* ACCENT */ border-radius: 2px; flex-shrink: 0; }
+    .cs-section p { color: var(--text-muted); line-height: 1.75; margin-bottom: 0.6rem; font-size: 0.95rem; }
+    .cs-section strong { color: var(--text); font-weight: 600; }
+
+    /* ── STATS ROW (optional, in Problem section) ── */
+    .cs-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
+    .cs-stat { flex: 1; min-width: 140px; background: #faf9ff; /* ACCENT tint */ border: 1px solid #e0d9f7; border-radius: 12px; padding: 1.2rem 1.4rem; }
+    .cs-stat-num { font-size: 1.6rem; font-weight: 800; color: #7c3aed; /* ACCENT */ line-height: 1; margin-bottom: 0.4rem; }
+    .cs-stat-label { font-size: 0.78rem; color: #6b7280; line-height: 1.4; }
+
+    /* ── USER CHIPS (Who This Is For) ── */
+    .cs-chips { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem; }
+    .cs-chip { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); font-size: 0.84rem; color: var(--text); font-weight: 500; }
+
+    /* ── HYPOTHESIS CALLOUT (optional) ── */
+    .cs-hypothesis-inner { background: #faf5ff; border-left: 3px solid #7c3aed; /* ACCENT */ border-radius: 0 var(--radius) var(--radius) 0; padding: 1.2rem 1.4rem; margin: 2rem auto 0; max-width: 800px; }
+    .cs-hypothesis-inner p { font-size: 0.95rem; color: var(--text); line-height: 1.7; margin: 0; font-style: italic; }
+
+    /* ── CORE FLOW ── */
+    .cs-flow-wrap { padding: 4rem 2rem; background: #fafafa; }
+    .cs-flow-inner { max-width: 820px; margin: 0 auto; }
+    .cs-flow-phones { display: flex; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; justify-content: center; }
+    .cs-flow-step { text-align: center; }
+    .cs-flow-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #7c3aed; /* ACCENT */ color: #fff; font-size: 0.72rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .cs-flow-phone { width: 130px; border-radius: 22px; border: 3px solid #1a1a1a; background: #000; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.15); }
+    .cs-flow-phone img { width: 100%; display: block; }
+    .cs-flow-caption { font-size: 0.76rem; color: #6b7280; margin-top: 0.7rem; max-width: 120px; line-height: 1.4; text-align: center; }
+    .cs-flow-arrow { font-size: 1.2rem; color: #c4b5fd; /* ACCENT light */ margin-top: 80px; flex-shrink: 0; }
+
+    /* ── FEATURE DEEP DIVE (repeat, alternating .reverse) ── */
+    .feature-section { border-top: 1px solid var(--border); }
+    .feature-wrap { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 200px; gap: 2.5rem; align-items: center; }
+    .feature-wrap.reverse { grid-template-columns: 200px 1fr; }
+    .feature-wrap.reverse .feature-phone { order: -1; }
+    .feature-wrap h3 { font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.9rem; letter-spacing: -0.01em; line-height: 1.3; }
+    .feature-wrap p { color: #374151; line-height: 1.75; font-size: 0.93rem; margin-bottom: 0.8rem; }
+    .feature-phone { width: 200px; border-radius: 28px; border: 3.5px solid #1a1a1a; background: #000; overflow: hidden; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+    .feature-phone img { width: 100%; display: block; }
+
+    /* ── DESIGN DECISIONS (do not skip this section) ── */
+    .cs-decisions { max-width: 820px; margin: 0 auto; padding: 4rem 2rem; }
+    .decisions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; }
+    .decision-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem 1.5rem; border-left: 3px solid #7c3aed; /* ACCENT */ }
+    .decision-q { font-size: 0.78rem; font-weight: 700; color: #7c3aed; /* ACCENT */ margin-bottom: 0.5rem; }
+    .decision-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
+    .decision-card p { font-size: 0.85rem; color: #6b7280; line-height: 1.6; margin: 0; }
+
+    /* ── PROCESS (always exactly 4 steps) ── */
+    .cs-process-wrap { background: #0a0a0a; padding: 4rem 2rem; border-top: 1px solid #1a1a1a; }
+    .cs-process-inner { max-width: 820px; margin: 0 auto; }
+    .cs-process-inner h2 { color: #fff; font-family: 'Sora', sans-serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .process-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; margin-top: 2.5rem; }
+    .process-step { text-align: center; }
+    .process-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(124,58,237,0.15); /* ACCENT tint */ border: 1px solid rgba(124,58,237,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 0.7rem; }
+    .process-step h4 { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .process-step p { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.5; margin: 0; }
+
+    /* ── REFLECTION (must include a genuine self-critique) ── */
+    .cs-reflection { background: #0e0a1f; /* dark, tinted toward ACCENT */ padding: 4rem 2rem; border-top: 1px solid #1a1a1a; }
+    .cs-reflection-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .cs-reflection-inner h2 { color: #fff; margin-bottom: 1.5rem; font-family: 'Sora', sans-serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 800; letter-spacing: -0.02em; }
+    .reflection-bullets { list-style: none; padding: 0; margin: 0 0 2rem; text-align: left; }
+    .reflection-bullets li { display: flex; gap: 0.8rem; align-items: flex-start; color: rgba(255,255,255,0.65); font-size: 0.93rem; line-height: 1.7; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .reflection-bullets li:last-child { border-bottom: none; }
+    .reflection-bullets li::before { content: '✦'; color: #7c3aed; /* ACCENT */ flex-shrink: 0; margin-top: 0.2rem; font-size: 0.75rem; }
+
+    /* ── CTA ── */
+    .cs-cta { padding: 5rem 2rem; text-align: center; background: #fff; border-top: 1px solid var(--border); }
+    .cs-cta h2 { font-family: 'Sora', sans-serif; font-size: clamp(1.5rem,3vw,2.2rem); font-weight: 800; color: var(--text); margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .cs-cta p { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.97rem; }
+    .cs-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .feature-wrap, .feature-wrap.reverse { grid-template-columns: 1fr; text-align: center; }
+      .feature-wrap.reverse .feature-phone { order: 0; }
+      .feature-phone { margin: 0 auto; }
+      .decisions-grid { grid-template-columns: 1fr; }
+      .process-strip { grid-template-columns: repeat(2,1fr); }
+      .cs-hero-phone.side { display: none; }
+      .cs-hero-phone.center { width: 200px; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV — copy verbatim from any existing case study, do not modify -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="../index.html">Sarvani<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">Work</a></li>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <a class="cs-back" href="../index.html">← Back</a>
+
+  <!-- 1. HERO -->
+  <div class="cs-hero">
+    <div class="cs-hero-tags">
+      <span class="cs-tag">[TODO: category tag]</span>
+      <span class="cs-tag">[TODO: solo/group tag]</span>
+    </div>
+    <h1>[TODO: Project Name — Punchy Two-Line Headline]</h1>
+    <p class="cs-hero-sub">[TODO: one sentence describing what was designed and the core value it delivers.]</p>
+    <div class="cs-hero-phones">
+      <div class="cs-hero-phone side"><img src="[TODO: assets/project-screen1.png]" alt="[TODO]" /></div>
+      <div class="cs-hero-phone center"><img src="[TODO: assets/project-screen2.png]" alt="[TODO]" /></div>
+      <div class="cs-hero-phone side"><img src="[TODO: assets/project-screen3.png]" alt="[TODO]" /></div>
+    </div>
+  </div>
+
+  <!-- 2. META BAR -->
+  <div class="cs-meta-bar">
+    <div class="cs-meta-inner">
+      <div class="cs-meta-item"><label>Role</label><span>[TODO]</span></div>
+      <div class="cs-meta-item"><label>Tools</label><span>[TODO]</span></div>
+      <div class="cs-meta-item"><label>Platform</label><span>[TODO]</span></div>
+      <div class="cs-meta-item"><label>Status</label><span>[TODO]</span></div>
+    </div>
+  </div>
+
+  <!-- 3. THE PROBLEM -->
+  <div class="cs-section">
+    <h2>[TODO: problem reframed as a punchy sentence, not "The Problem"]</h2>
+    <p>[TODO: 1-2 paragraphs. Quantify the pain if you can.]</p>
+    <p><strong>[TODO: bolded "How might we…" question, inline.]</strong></p>
+    <!-- optional stats row -->
+    <div class="cs-stats">
+      <div class="cs-stat"><div class="cs-stat-num">[TODO]</div><div class="cs-stat-label">[TODO]</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">[TODO]</div><div class="cs-stat-label">[TODO]</div></div>
+      <div class="cs-stat"><div class="cs-stat-num">[TODO]</div><div class="cs-stat-label">[TODO]</div></div>
+    </div>
+  </div>
+
+  <!-- 4. WHO THIS IS FOR -->
+  <div class="cs-section">
+    <h2>Who This Is For</h2>
+    <p>[TODO: describe the target user in 1-2 sentences.]</p>
+    <div class="cs-chips">
+      <div class="cs-chip">[TODO emoji] [TODO trait]</div>
+      <div class="cs-chip">[TODO emoji] [TODO trait]</div>
+      <div class="cs-chip">[TODO emoji] [TODO trait]</div>
+    </div>
+  </div>
+
+  <!-- optional: HYPOTHESIS CALLOUT for research-driven projects
+  <div class="cs-hypothesis-inner">
+    <p>"[TODO: the team's/your hypothesis, stated as a quote.]"</p>
+  </div>
+  -->
+
+  <!-- 5. CORE FLOW -->
+  <div class="cs-flow-wrap">
+    <div class="cs-flow-inner">
+      <h2>[TODO: the core flow in one sentence, e.g. "Tap a list. Customise it. Add to cart."]</h2>
+      <div class="cs-flow-phones">
+        <div class="cs-flow-step">
+          <div class="cs-flow-num">1</div>
+          <div class="cs-flow-phone"><img src="[TODO]" alt="[TODO]" /></div>
+          <p class="cs-flow-caption">[TODO]</p>
+        </div>
+        <div class="cs-flow-arrow">→</div>
+        <div class="cs-flow-step">
+          <div class="cs-flow-num">2</div>
+          <div class="cs-flow-phone"><img src="[TODO]" alt="[TODO]" /></div>
+          <p class="cs-flow-caption">[TODO]</p>
+        </div>
+        <div class="cs-flow-arrow">→</div>
+        <div class="cs-flow-step">
+          <div class="cs-flow-num">3</div>
+          <div class="cs-flow-phone"><img src="[TODO]" alt="[TODO]" /></div>
+          <p class="cs-flow-caption">[TODO]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. FEATURE DEEP DIVES — repeat this block per feature, alternate .reverse -->
+  <div class="feature-section">
+    <div class="feature-wrap">
+      <div class="feature-text">
+        <h3>[TODO: feature headline]</h3>
+        <p>[TODO: paragraph 1 — what it does and why it's placed/built this way.]</p>
+        <p>[TODO: paragraph 2 — the design rationale, tied to a user need.]</p>
+      </div>
+      <div class="feature-phone"><img src="[TODO]" alt="[TODO]" /></div>
+    </div>
+  </div>
+  <div class="feature-section">
+    <div class="feature-wrap reverse">
+      <div class="feature-phone"><img src="[TODO]" alt="[TODO]" /></div>
+      <div class="feature-text">
+        <h3>[TODO: feature headline]</h3>
+        <p>[TODO]</p>
+        <p>[TODO]</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. DESIGN DECISIONS — the most distinctive section, do not skip -->
+  <div class="cs-decisions">
+    <h2>The thinking behind the choices</h2>
+    <div class="decisions-grid">
+      <div class="decision-card">
+        <div class="decision-q">[TODO: "Why X?"]</div>
+        <h4>[TODO: bolded one-line takeaway]</h4>
+        <p>[TODO: rationale, 1-2 sentences.]</p>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q">[TODO]</div>
+        <h4>[TODO]</h4>
+        <p>[TODO]</p>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q">[TODO]</div>
+        <h4>[TODO]</h4>
+        <p>[TODO]</p>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q">[TODO]</div>
+        <h4>[TODO]</h4>
+        <p>[TODO]</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. PROCESS — always exactly 4 steps -->
+  <div class="cs-process-wrap">
+    <div class="cs-process-inner">
+      <h2>How I got there</h2>
+      <div class="process-strip">
+        <div class="process-step"><div class="process-icon">🔍</div><h4>[TODO]</h4><p>[TODO]</p></div>
+        <div class="process-step"><div class="process-icon">✏️</div><h4>[TODO]</h4><p>[TODO]</p></div>
+        <div class="process-step"><div class="process-icon">📱</div><h4>[TODO]</h4><p>[TODO]</p></div>
+        <div class="process-step"><div class="process-icon">🚀</div><h4>[TODO]</h4><p>[TODO]</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. REFLECTION — must include a real self-critique, not just wins -->
+  <div class="cs-reflection">
+    <div class="cs-reflection-inner">
+      <h2>What this project taught me</h2>
+      <ul class="reflection-bullets">
+        <li>[TODO: a genuine lesson learned.]</li>
+        <li>[TODO: what worked and why.]</li>
+        <li>[TODO: an honest "what I'd do differently" or "what I'd test next."]</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 13. CTA -->
+  <div class="cs-cta">
+    <h2>See the full prototype in Figma</h2>
+    <p>[TODO: one sentence.]</p>
+    <div class="cs-cta-btns">
+      <a class="btn btn-primary" href="[TODO: real Figma URL]" target="_blank" rel="noopener">View in Figma ↗</a>
+      <a class="btn btn-outline" href="../index.html#projects">← Back to Work</a>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>

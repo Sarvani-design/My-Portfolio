@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sarvani Vulavalapudi — UX Designer & Product Designer</title>
-  <meta name="description" content="Portfolio of Sarvani Vulavalapudi — UX Designer, Product Designer, and UX Engineer blending enterprise engineering with AI-augmented design." />
+  <meta name="description" content="Portfolio of Sarvani Vulavalapudi — UI/UX Designer and Product Designer blending enterprise engineering with AI-augmented design." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -28,7 +28,7 @@
       <div class="hero-text">
         <div class="hero-tag">Open to new opportunities</div>
         <h1 class="hero-name">Sarvani<br><span>Vulavalapudi</span></h1>
-        <p class="hero-title">UX Designer &nbsp;·&nbsp; Product Designer &nbsp;·&nbsp; UX Engineer</p>
+        <p class="hero-title">UI/UX Designer &nbsp;·&nbsp; Product Designer</p>
         <p class="hero-tagline">
           From <strong>building enterprise software at Infosys</strong><br>
           to <strong>designing with Figma AI agents</strong> —<br>
@@ -70,10 +70,110 @@
       <p class="section-label">Selected Work</p>
       <h2 class="section-title">Designing across fintech, social, and commerce.</h2>
 
+      <div class="work-controls">
+        <div class="filter-pills" role="group" aria-label="Filter by build method">
+          <button class="filter-pill active" data-filter="all">All Work</button>
+          <button class="filter-pill" data-filter="vibe">✦ Vibe-Coded</button>
+          <button class="filter-pill" data-filter="figma-ai">Figma + AI</button>
+          <button class="filter-pill" data-filter="figma">Figma</button>
+        </div>
+        <div class="sort-pills" role="group" aria-label="Sort order">
+          <button class="sort-pill active" data-sort="newest">Newest First</button>
+          <button class="sort-pill" data-sort="curated">Curated Order</button>
+        </div>
+      </div>
+
       <div class="projects-grid">
 
+        <!-- -2. Virasat — The Exotic Veg — Vibe Coded, real business -->
+        <div class="project-card" data-build="vibe" data-date="2026-07-23T12:00:00" data-curated="9">
+          <div class="card-visual" style="background: linear-gradient(135deg, #2b1a12 0%, #1a0e10 100%);">
+            <div class="mock-browser">
+              <div class="mock-browser-bar">
+                <span class="mock-dot" style="background:#ff5f57;"></span>
+                <span class="mock-dot" style="background:#febc2e;"></span>
+                <span class="mock-dot" style="background:#28c840;"></span>
+              </div>
+              <img class="mock-browser-screen" src="assets/virasat-hero.jpg" alt="Virasat — The Exotic Veg website hero" loading="lazy" />
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-solo">Solo</span>
+              <span class="badge badge-vibe">✦ Vibe Coded</span>
+              <span class="badge badge-tag">Real Business</span>
+              <span class="badge badge-tag">Restaurant</span>
+            </div>
+            <h3>Virasat — The Exotic Veg — Restaurant Website</h3>
+            <p class="card-problem">Can a 4.6★, 2,373-review restaurant get a web presence that matches its reputation — priced menu and all?</p>
+            <p>A website concept for a real pure-vegetarian restaurant in Nizampet, Hyderabad — built by prompting Claude Code directly from a real Google Maps listing, with a fully priced 13-category menu.</p>
+            <div class="project-links">
+              <a class="project-link" href="virasat-case-study.html">Read Case Study →</a>
+              <a class="project-link-secondary" href="https://virasat-web.vercel.app/" target="_blank" rel="noopener">View Live Site ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- -1. Jaquelines Flowers — Vibe Coded, real business, bilingual -->
+        <div class="project-card" data-build="vibe" data-date="2026-07-23" data-curated="8">
+          <div class="card-visual terracotta-grad">
+            <div class="mock-browser">
+              <div class="mock-browser-bar">
+                <span class="mock-dot" style="background:#ff5f57;"></span>
+                <span class="mock-dot" style="background:#febc2e;"></span>
+                <span class="mock-dot" style="background:#28c840;"></span>
+              </div>
+              <img class="mock-browser-screen" src="assets/jaqueline-hero.png" alt="Jaquelines Flowers website hero" loading="lazy" />
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-solo">Solo</span>
+              <span class="badge badge-vibe">✦ Vibe Coded</span>
+              <span class="badge badge-tag">Real Business</span>
+              <span class="badge badge-tag">Bilingual</span>
+            </div>
+            <h3>Jaquelines Flowers — Bilingual Florist Website</h3>
+            <p class="card-problem">Can a real, bilingual family florist get a website that actually serves both halves of its customer base?</p>
+            <p>A website concept for a real family-owned florist in Los Angeles — built by prompting Claude Code directly from a real Google Maps listing, with a language switcher designed around the shop's real bilingual service.</p>
+            <div class="project-links">
+              <a class="project-link" href="jaqueline-case-study.html">Read Case Study →</a>
+              <a class="project-link-secondary" href="https://floral-business-web.sarvaniyagami9.workers.dev/" target="_blank" rel="noopener">View Live Site ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 0. Bun-Wigi Bistro — Vibe Coded, real business -->
+        <div class="project-card" data-build="vibe" data-date="2026-07-20" data-curated="7">
+          <div class="card-visual terracotta-grad">
+            <div class="mock-browser">
+              <div class="mock-browser-bar">
+                <span class="mock-dot" style="background:#ff5f57;"></span>
+                <span class="mock-dot" style="background:#febc2e;"></span>
+                <span class="mock-dot" style="background:#28c840;"></span>
+              </div>
+              <img class="mock-browser-screen" src="assets/bunwigi-hero-signage.png" alt="The Bun-Wigi Bistro website hero" loading="lazy" />
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-solo">Solo</span>
+              <span class="badge badge-vibe">✦ Vibe Coded</span>
+              <span class="badge badge-tag">Real Business</span>
+              <span class="badge badge-tag">Web Design</span>
+            </div>
+            <h3>The Bun-Wigi Bistro — Real Restaurant Website</h3>
+            <p class="card-problem">Can a real, 4.7★ restaurant get a web presence that matches its reputation — built by prompting Claude Code directly, no Figma?</p>
+            <p>A full website for an actual Pan-Asian & Continental restaurant in Banjara Hills, Hyderabad — real menu, real Google rating, real reservation and delivery links. Designed and shipped end-to-end via "vibe coding," then pitched to the business.</p>
+            <div class="project-links">
+              <a class="project-link" href="bunwigi-case-study.html">Read Case Study →</a>
+              <a class="project-link-secondary" href="https://bun-wigi.vercel.app/" target="_blank" rel="noopener">View Live Site ↗</a>
+            </div>
+          </div>
+        </div>
+
         <!-- 1. Flow Fintech -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma-ai" data-date="2026-05-15" data-curated="1">
           <div class="card-visual blue-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -99,7 +199,7 @@
         </div>
 
         <!-- 2. Instagram Watch History Case Study -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2026-03-10" data-curated="2">
           <div class="card-visual purple-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -125,7 +225,7 @@
         </div>
 
         <!-- 3. GroceryBuddy -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2026-01-20" data-curated="3">
           <div class="card-visual green-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -151,7 +251,7 @@
         </div>
 
         <!-- 4. Instagram Redesign -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma-ai" data-date="2025-11-05" data-curated="4">
           <div class="card-visual ig-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -177,7 +277,7 @@
         </div>
 
         <!-- 5. Airbnb -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2025-09-20" data-curated="5">
           <div class="card-visual pink-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -202,7 +302,7 @@
         </div>
 
         <!-- 6. Zepto -->
-        <div class="project-card">
+        <div class="project-card" data-build="figma" data-date="2025-08-01" data-curated="6">
           <div class="card-visual zepto-grad">
             <div class="mock-phone">
               <div class="mock-notch"></div>
@@ -378,7 +478,7 @@
   <section id="contact">
     <p class="section-label">Get In Touch</p>
     <h2 class="section-title">Let's build something together.</h2>
-    <p>Open to UX Engineer, UX Audit, UI/UX Designer, and Product Designer roles. Looking for someone who speaks fluent design AND engineering? Let's talk.</p>
+    <p>Open to UI/UX Designer and Product Designer roles. Looking for someone who speaks fluent design AND engineering? Let's talk.</p>
     <div class="contact-links">
       <a class="btn btn-primary" href="mailto:gokulasaisarvani@gmail.com">gokulasaisarvani@gmail.com</a>
       <a class="btn btn-outline-light" href="https://www.linkedin.com/in/sarvanivulavalapudi/" target="_blank" rel="noopener">LinkedIn ↗</a>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jaquelines Flowers — Vibe-Coded Case Study · Sarvani Vulavalapudi</title>
+  <meta name="description" content="Case study: a bilingual website concept for Jaquelines Flowers, a family-owned florist in Los Angeles — built by vibe coding in the Claude Code VS Code extension from a real Google Maps listing." />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .cs-back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; position: absolute; top: 80px; left: 2rem; z-index: 10; }
+    .cs-back:hover { color: #fff; }
+
+    .cs-hero {
+      min-height: 74vh;
+      background: #1c1917 linear-gradient(160deg, #1c1917 0%, #241b16 50%, #2b1a12 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 7rem 2rem 3rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .cs-hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(172,86,57,0.28); border: 1px solid rgba(172,86,57,0.5); color: #f0bfab; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 1.4rem; }
+    .cs-hero h1 { font-family: 'Sora', sans-serif; font-size: clamp(1.9rem, 4.8vw, 3.2rem); font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 0.9rem; max-width: 700px; }
+    .cs-hero h1 em { font-style: normal; color: #e2a88f; }
+    .cs-hero-sub { font-size: clamp(0.9rem, 1.4vw, 1rem); color: rgba(255,255,255,0.72); max-width: 520px; line-height: 1.6; margin-bottom: 2rem; }
+
+    .bw-browser { width: 100%; max-width: 480px; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 30px 90px rgba(0,0,0,0.5); }
+    .bw-browser-bar { height: 30px; background: #efe6e0; display: flex; align-items: center; gap: 6px; padding: 0 10px; }
+    .bw-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .bw-dot.red { background: #ff5f57; } .bw-dot.yellow { background: #febc2e; } .bw-dot.green { background: #28c840; }
+    .bw-browser-url { margin-left: 8px; font-size: 0.68rem; color: #4b5563; background: #fff; border-radius: 6px; padding: 3px 10px; flex: 1; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .bw-hero-recreate { background-image: url('assets/jaqueline-hero.png'); background-color: #1c1917; background-size: cover; background-position: center; min-height: 240px; display: flex; align-items: flex-end; padding: 1.4rem; position: relative; }
+    .bw-hero-recreate::before { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.05) 100%); }
+    .bw-hero-recreate-inner { position: relative; text-align: left; color: #fff; }
+    .bw-hero-recreate-inner .bw-mini-h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; line-height: 1.1; margin-bottom: 0.5rem; }
+    .bw-hero-rating { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; color: #fff; margin-bottom: 0.4rem; font-weight: 600; }
+    .bw-lang-toggle { display: inline-flex; border-radius: 99px; overflow: hidden; margin-top: 0.6rem; }
+    .bw-lang-option { padding: 0.3rem 0.7rem; font-size: 0.66rem; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .bw-lang-option.active { background: #d97b3f; color: #1c1917; }
+    .bw-lang-option.inactive { background: rgba(255,255,255,0.18); color: #fff; }
+
+    .cs-meta-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.4rem 2rem; }
+    .cs-meta-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.2rem; }
+    .cs-meta-item label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .cs-meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+    .cs-meta-item a { color: #8a4229; font-weight: 600; text-decoration: none; }
+    .cs-meta-item a:hover { text-decoration: underline; }
+
+    .cs-section { max-width: 700px; margin: 0 auto; padding: 2.5rem 2rem 0; text-align: center; }
+    .cs-section p { color: var(--text-muted); line-height: 1.65; font-size: 0.95rem; margin: 0; }
+    .cs-section strong { color: var(--text); }
+
+    /* ── GALLERY — real site images, horizontal scroll ── */
+    .bw-gallery-wrap { background: #faf3ef; padding: 2.5rem 2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: 2.5rem; }
+    .bw-gallery-label { max-width: var(--max); margin: 0 auto 1.2rem; font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8a4229; }
+    .bw-gallery { max-width: var(--max); margin: 0 auto; display: flex; gap: 1.1rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; }
+    .bw-gallery::-webkit-scrollbar { display: none; }
+    .bw-gallery-item { flex-shrink: 0; text-align: center; }
+    .bw-gallery-photo { width: 220px; height: 220px; border-radius: 12px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.16); }
+    .bw-gallery-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bw-gallery-caption { font-size: 0.76rem; font-weight: 600; color: var(--text-muted); margin-top: 0.6rem; }
+
+    /* ── FEATURE: bilingual toggle ── */
+    .feature-section { border-top: 1px solid var(--border); }
+    .feature-wrap { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; display: grid; grid-template-columns: 1fr 320px; gap: 2.5rem; align-items: center; }
+    .feature-wrap h3 { font-family: 'Sora', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .feature-wrap p { color: #374151; line-height: 1.65; font-size: 0.9rem; margin: 0; }
+    .bw-lang-feature-body { background: #fcfaf8; padding: 2rem 1.5rem; text-align: center; }
+    .bw-lang-feature-toggle { display: inline-flex; border: 1.5px solid #ac5639; border-radius: 99px; overflow: hidden; margin-bottom: 0.9rem; }
+    .bw-lang-feature-option { padding: 0.5rem 1.3rem; font-size: 0.85rem; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .bw-lang-feature-option.active { background: #ac5639; color: #fff; }
+    .bw-lang-feature-option.inactive { background: #fff; color: #8a4229; }
+    .bw-lang-badge { display: block; font-size: 0.72rem; font-weight: 700; color: #8a4229; }
+
+    /* ── REVIEWS strip ── */
+    .cs-reviews-wrap { background: #fafafa; padding: 2.5rem 2rem; border-top: 1px solid var(--border); }
+    .cs-reviews-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+    .cs-reviews-score { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.8rem; color: #1c1917; margin-bottom: 0.3rem; }
+    .cs-reviews-score span { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; }
+    .cs-review-quotes { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.2rem; }
+    .cs-review-quote { flex: 1; min-width: 220px; max-width: 300px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.1rem; font-size: 0.82rem; color: #374151; font-style: italic; line-height: 1.55; text-align: left; }
+    .cs-review-quote span { display: block; margin-top: 0.5rem; font-style: normal; font-weight: 600; font-size: 0.75rem; color: #8a4229; }
+
+    /* ── DESIGN DECISIONS — 2 cards only ── */
+    .cs-decisions { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
+    .cs-decisions-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8a4229; display: block; margin-bottom: 0.5rem; text-align: center; }
+    .cs-decisions h2 { font-family: 'Sora', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1.5rem; text-align: center; }
+    .decisions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .decision-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.3rem; border-left: 3px solid #ac5639; }
+    .decision-q { font-size: 0.76rem; font-weight: 700; color: #8a4229; margin-bottom: 0.4rem; }
+    .decision-card p { font-size: 0.85rem; color: #4b5563; line-height: 1.55; margin: 0; }
+
+    /* ── PROCESS ── */
+    .cs-process-wrap { background: #1c1917; padding: 3rem 2rem; border-top: 1px solid #241b16; }
+    .cs-process-inner { max-width: 900px; margin: 0 auto; }
+    .cs-process-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f0bfab; display: block; margin-bottom: 0.5rem; }
+    .cs-process-inner h2 { color: #fff; font-family: 'Sora', sans-serif; font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .process-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; margin-top: 1.8rem; }
+    .process-step { text-align: center; }
+    .process-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(172,86,57,0.18); border: 1px solid rgba(172,86,57,0.35); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin: 0 auto 0.5rem; }
+    .process-step h4 { font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+    .process-step p { font-size: 0.73rem; color: rgba(255,255,255,0.6); line-height: 1.4; margin: 0; }
+
+    /* ── REFLECTION ── */
+    .cs-reflection { background: #241b16; padding: 3rem 2rem; border-top: 1px solid #2b1a12; }
+    .cs-reflection-inner { max-width: 700px; margin: 0 auto; text-align: left; }
+    .cs-reflection-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f0bfab; display: block; margin-bottom: 0.5rem; text-align: center; }
+    .cs-reflection-inner h2 { color: #fff; margin-bottom: 1.2rem; font-family: 'Sora', sans-serif; font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; text-align: center; }
+    .reflection-bullets { list-style: none; padding: 0; margin: 0; }
+    .reflection-bullets li { display: flex; gap: 0.7rem; align-items: flex-start; color: rgba(255,255,255,0.82); font-size: 0.88rem; line-height: 1.55; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .reflection-bullets li:last-child { border-bottom: none; }
+    .reflection-bullets li::before { content: '✦'; color: #e2a88f; flex-shrink: 0; margin-top: 0.15rem; font-size: 0.72rem; }
+    .reflection-bullets li strong { color: #fff; }
+
+    .cs-cta { padding: 3rem 2rem; text-align: center; background: #fff; border-top: 1px solid var(--border); }
+    .cs-cta h2 { font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 1.2rem; letter-spacing: -0.02em; }
+    .cs-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cs-btn-primary { background: #ac5639; color: #fff; padding: 0.75rem 1.7rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+    .cs-btn-primary:hover { background: #8a4229; }
+    .cs-btn-secondary { background: transparent; color: var(--text); border: 1.5px solid var(--border); padding: 0.75rem 1.7rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .cs-btn-secondary:hover { border-color: #ac5639; color: #8a4229; }
+
+    @media (max-width: 780px) {
+      .feature-wrap { grid-template-columns: 1fr; text-align: center; }
+      .decisions-grid { grid-template-columns: 1fr; }
+      .process-strip { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">Sarvani<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <a class="cs-back" href="index.html">← Back</a>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <span class="cs-hero-tag">✦ Vibe Coding · Claude Code · Real Business</span>
+    <h1>A family florist, <em>vibe-coded</em> bilingual</h1>
+    <p class="cs-hero-sub">A website concept for a real family-owned florist in Los Angeles — built in the Claude Code VS Code extension from a real Google Maps listing.</p>
+    <div class="bw-browser">
+      <div class="bw-browser-bar">
+        <span class="bw-dot red"></span><span class="bw-dot yellow"></span><span class="bw-dot green"></span>
+        <span class="bw-browser-url">floral-business-web.workers.dev</span>
+      </div>
+      <div class="bw-hero-recreate">
+        <div class="bw-hero-recreate-inner">
+          <div class="bw-hero-rating">★ 5.0 · 115+ Google reviews</div>
+          <div class="bw-mini-h1">Where Los Angeles blooms.</div>
+          <div class="bw-lang-toggle">
+            <span class="bw-lang-option active">EN</span>
+            <span class="bw-lang-option inactive">ES</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- META BAR -->
+  <div class="cs-meta-bar">
+    <div class="cs-meta-inner">
+      <div class="cs-meta-item"><label>Role</label><span>Solo — Sourcing, Prompting &amp; Code</span></div>
+      <div class="cs-meta-item"><label>Build Method</label><span>Vibe-Coded — Claude Code (VS Code ext.)</span></div>
+      <div class="cs-meta-item"><label>Source Data</label><span>Real Google Maps listing</span></div>
+      <div class="cs-meta-item"><label>Photography</label><span>Stock (v1 concept — real photos pending)</span></div>
+      <div class="cs-meta-item"><label>Live Site</label><span><a href="https://floral-business-web.sarvaniyagami9.workers.dev/" target="_blank" rel="noopener">View live site ↗</a></span></div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="cs-section">
+    <p>Jaquelines Flowers is a real, bilingual, family-owned florist in LA — 5.0★, 115+ reviews, no website of its own. <strong>This is a version-one concept</strong>: real business data, stock photography as a placeholder until the owner shares their own.</p>
+  </section>
+
+  <!-- GALLERY -->
+  <div class="bw-gallery-wrap">
+    <div class="bw-gallery-label">The Site — Screen by Screen</div>
+    <div class="bw-gallery">
+      <div class="bw-gallery-item">
+        <div class="bw-gallery-photo"><img src="assets/jaqueline-hero.png" alt="Hero section" /></div>
+        <div class="bw-gallery-caption">Hero</div>
+      </div>
+      <div class="bw-gallery-item">
+        <div class="bw-gallery-photo"><img src="assets/jaqueline-about.png" alt="Our Story section" /></div>
+        <div class="bw-gallery-caption">Our Story</div>
+      </div>
+      <div class="bw-gallery-item">
+        <div class="bw-gallery-photo"><img src="assets/jaqueline-bouquet-lilies.png" alt="Elegant Lilies bouquet" /></div>
+        <div class="bw-gallery-caption">Elegant Lilies</div>
+      </div>
+      <div class="bw-gallery-item">
+        <div class="bw-gallery-photo"><img src="assets/jaqueline-bouquet-spring.png" alt="Vibrant Spring bouquet" /></div>
+        <div class="bw-gallery-caption">Vibrant Spring</div>
+      </div>
+      <div class="bw-gallery-item">
+        <div class="bw-gallery-photo"><img src="assets/jaqueline-bouquet-romance.png" alt="Classic Romance bouquet" /></div>
+        <div class="bw-gallery-caption">Classic Romance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE: BILINGUAL TOGGLE — the headline decision -->
+  <div class="feature-section">
+    <div class="feature-wrap">
+      <div class="feature-text">
+        <h3>The main feature: a real EN / ES language toggle</h3>
+        <p>The shop is genuinely bilingual, in person, every day. The site carries that over directly with a language switcher in the nav — designed for the customers this specific business actually has, not a generic accessibility add-on.</p>
+      </div>
+      <div class="bw-lang-feature-body">
+        <div class="bw-lang-feature-toggle">
+          <span class="bw-lang-feature-option active">EN</span>
+          <span class="bw-lang-feature-option inactive">ES</span>
+        </div>
+        <span class="bw-lang-badge">Hablamos Español</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="cs-reviews-wrap">
+    <div class="cs-reviews-inner">
+      <div class="cs-reviews-score">5.0★ <span>115+ Google reviews</span></div>
+      <div class="cs-review-quotes">
+        <div class="cs-review-quote">"The family who runs the shop is very welcoming and nice and bilingual."<span>— Corazon Tovar</span></div>
+        <div class="cs-review-quote">"Photos don't do the bouquet I got here justice."<span>— Corazon Tovar, Local Guide</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESIGN DECISIONS -->
+  <section class="cs-decisions">
+    <span class="cs-decisions-label">Design Decisions</span>
+    <h2>Two calls worth explaining</h2>
+    <div class="decisions-grid">
+      <div class="decision-card">
+        <div class="decision-q">Why a language switcher?</div>
+        <p>The shop already serves English and Spanish speakers daily — the site should too. A direct line to more bookings, not a checkbox.</p>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q">Why source from Google Maps?</div>
+        <p>Name, reviews, rating, hours, address — all copied from the real listing, so the concept is grounded in a real, findable business.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <div class="cs-process-wrap">
+    <div class="cs-process-inner">
+      <span class="cs-process-label">The Process</span>
+      <h2>How it actually got built</h2>
+      <div class="process-strip">
+        <div class="process-step">
+          <div class="process-icon"><img src="https://cdn.simpleicons.org/googlemaps/AC5639" alt="" style="width:20px;height:20px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" /><span style="display:none;">🗺️</span></div>
+          <h4>Sourced on Maps</h4>
+          <p>Found a real local business with no website, copied its full listing.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">📄</div>
+          <h4>Reference Template</h4>
+          <p>Started from an existing florist website, not a blank page.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">💬</div>
+          <h4>Vibe Coded</h4>
+          <p>Pasted the listing into Claude Code in VS Code, prompted it to adapt.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-icon">🚀</div>
+          <h4>Shipped &amp; Pitched</h4>
+          <p>Added the language switcher, then deployed and pitched to the owner.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div class="cs-reflection">
+    <div class="cs-reflection-inner">
+      <span class="cs-reflection-label">Reflection</span>
+      <h2>What this taught me</h2>
+      <ul class="reflection-bullets">
+        <li><strong>The bilingual toggle was the whole point.</strong> Not a trend — it came straight from how this shop actually serves its customers.</li>
+        <li><strong>These are stock photos, not the shop's own.</strong> Version one uses placeholder images; real photography from the owner is the obvious next step.</li>
+        <li><strong>It hasn't been adopted yet.</strong> Pitched, not confirmed — an unsolicited redesign is a different ask than a brief.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cs-cta">
+    <h2>See the live site</h2>
+    <div class="cs-cta-btns">
+      <a class="cs-btn-primary" href="https://floral-business-web.sarvaniyagami9.workers.dev/" target="_blank" rel="noopener">View Live Site ↗</a>
+      <a class="cs-btn-secondary" href="index.html#projects">← Back to Work</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
