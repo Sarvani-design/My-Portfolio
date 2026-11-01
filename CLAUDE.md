@@ -10,8 +10,9 @@ A static HTML/CSS/JS portfolio for Sarvani Vulavalapudi (UX/Product Designer). N
 
 | File | Purpose |
 |---|---|
-| `index.html` | Homepage — hero, **curated** project grid (5 hand-picked cards, no filter/sort UI), about/journey, experience, education, contact |
-| `work.html` | Full project archive — **all** project cards, with the filter-pills/sort-pills UI. Linked from the homepage via the "View More Work →" button above the curated grid. |
+| `index.html` | Homepage — hero, **curated** project grid (currently 3 cards: Flow, Instagram AI Save Search, and the merged real-business concepts entry; no filter/sort UI), about/journey, experience, education, contact |
+| `business-websites.html` | Hub case study that merges the three real-business concepts (Virasat, Bun-Wigi, Jaquelines) into one entry: one hero image each, live links, a disclaimer, a design-thinking section. The three individual case studies still exist and are linked from it. |
+| `work.html` | Full project archive — **all 9** individual project cards (nothing is removed from the site; anything not on the homepage lives here), with the filter-pills/sort-pills UI. Linked from the homepage via the "View More Work →" button above the curated grid. |
 | `style.css` | Global tokens, nav, buttons, homepage project-card + phone-mockup component |
 | `script.js` | Nav scroll-spy (all pages) + the filter/sort logic for the project grid. The filter/sort part only activates on pages that have `.work-controls` (i.e. `work.html`); everywhere else it's a no-op. |
 | `zepto-case-study.html` | Group project, interaction design, purple `#7c3aed` — **best reference for the full pattern** |
@@ -75,12 +76,26 @@ Don't reuse another project's exact class names — write a fresh `<style>` bloc
 
 ## Homepage vs. full archive
 
-`index.html`'s Work section is a **fixed, hand-curated 5-card preview** — currently 1 vibe-coded project + the 2 Figma+AI projects + 2 plain-Figma projects. It has no `.work-controls` (no filter pills, no sort pills) and script.js deliberately leaves it in authored HTML order — see the guard clause at the top of the "Work grid" IIFE in `script.js` (`if (!grid || !controls) return;`). Don't add filter/sort UI back to the homepage; that's what `work.html` is for.
+The homepage follows `I got job/portfolio-change-plan.docx` (Product Designer · Enterprise & B2B positioning). Its Work section is a **short, fixed, hand-curated list with no `.work-controls`**, and `script.js` leaves it in authored HTML order (guard clause at the top of the "Work grid" IIFE: `if (!grid || !controls) return;`). Don't add filter/sort UI back to the homepage; that's what `work.html` is for.
 
-`work.html` holds **every** project card (all of them, including the 5 also shown on the homepage) plus the full filter-pills/sort-pills UI. It's the "see everything" page, linked from the homepage's "View More Work →" button.
+Current homepage order: **Flow → Instagram AI Save Search → "Real-business website concepts" (the merged entry linking to `business-websites.html`)**. Per the plan, slots 1 and 2 are reserved for two enterprise case studies (Infosys Teams chatbot / Adaptive Cards, and Fiverr "Spec-to-UI") that **do not exist yet**. When they're built they go first, and the "Selected work" heading can become "Enterprise workflows, data-dense UI, and AI-assisted product design." Never publish placeholder/invented content for them — they need the owner's real facts (see "Content rules").
 
-**When adding a new case study card, it always goes in `work.html`.** Only add it to `index.html` too if you're deliberately swapping it into the curated 5 — if so, keep the curated set balanced (roughly: 1 vibe-coded, the Figma+AI projects, a couple of plain-Figma projects) and remove one of the existing 5 to make room, rather than just growing the homepage list.
+`work.html` holds **every individual project card** plus the full filter-pills/sort-pills UI, linked from the homepage's "View More Work →" button. The owner's rule: **never remove a project** — if it isn't on the homepage, it lives on `work.html`. (This is why Instagram Watch History, which the plan suggested dropping, is still on `work.html`.)
 
+**New card → always add it to `work.html`.** Only add it to `index.html` too if it's deliberately taking a homepage slot.
+
+## Content rules (from the plan — keep following these)
+
+- **Email stays as-is.** The owner explicitly wants `gokulasaisarvani@gmail.com` kept everywhere it appears, overriding the plan's "use the resume email". Don't change it.
+- **No invented metrics.** GroceryBuddy's 42% / 68% / ₹850 / 38% are labelled "Projected … Not tested" until a real test replaces them. Don't add new unverified numbers anywhere.
+- **Be honest about AI, decisions first.** Wording like "I designed and decided…, using Stitch/Claude to explore or refine" — never "AI generated the direction".
+- **Real-business concepts** (Virasat, Bun-Wigi, Jaquelines): always say "Unsolicited concept, not affiliated with the business"; don't present as UX research; don't name individual Google reviewers (use "Google reviewer"). Photos on those pages come from the concept sites and aren't the owner's own — flag that, and replace with the owners' or licensed images when possible.
+- **Tools list** is Figma, Framer, Miro + AI tools (Marvel, Adobe XD and Jitter were removed on purpose).
+- **Motion** is subtle and always optional: hero fade-in, card hover lift, and everything is disabled under `prefers-reduced-motion` (rule at the bottom of the motion block in `style.css`).
+
+## Still open from the plan (needs the owner's real input — don't fabricate)
+
+Enterprise Teams-chatbot case study; Spec-to-UI (Fiverr) case study; 5-user tests for Flow and AI Save Search ("What I tested and found"); resume **PDF** to link from "Full Resume" (only .docx files exist); clean project URL for Jaquelines (currently a personal workers.dev address); one short motion clip per featured case study; "Role, scope, constraints" blocks and "What I'd do next" on every case study.
 ## Build-method categories (homepage filter)
 
 Every `.project-card` in `work.html` (and the 5 mirrored onto `index.html`) carries data attributes that drive the filter/sort bar (`.work-controls`, wired up in `script.js`):

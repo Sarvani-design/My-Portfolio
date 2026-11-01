@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-business website concepts — Case Study · Sarvani Vulavalapudi</title>
+  <meta name="description" content="Three quick website concepts for real local businesses — two restaurants in Hyderabad and a florist in Los Angeles — built with AI from public information and pitched to each owner. Unsolicited concepts, not affiliated with the businesses." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Hub page for the three real-business website concepts. Neutral slate + the portfolio teal;
+       each individual case study keeps its own brand palette. */
+
+    .cs-back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; position: absolute; top: 80px; left: 2rem; z-index: 10; }
+    .cs-back:hover { color: #fff; }
+
+    .cs-hero { min-height: 62vh; background: #0f172a linear-gradient(160deg, #0f172a 0%, #172033 55%, #1e293b 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7rem 2rem 3.5rem; text-align: center; }
+    .cs-hero-tag { display: inline-flex; background: rgba(20,184,166,0.2); border: 1px solid rgba(20,184,166,0.45); color: #99f6e4; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 20px; margin-bottom: 1.4rem; }
+    .cs-hero h1 { font-family: 'Sora', sans-serif; font-size: clamp(1.9rem, 4.8vw, 3.1rem); font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 0.9rem; max-width: 720px; }
+    .cs-hero-sub { font-size: clamp(0.92rem, 1.4vw, 1.02rem); color: rgba(255,255,255,0.75); max-width: 560px; line-height: 1.6; margin-bottom: 1.6rem; }
+    .cs-disclaimer { display: inline-block; max-width: 560px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.22); color: #fff; font-size: 0.86rem; line-height: 1.5; padding: 0.7rem 1.1rem; border-radius: 12px; }
+    .cs-disclaimer strong { color: #99f6e4; }
+
+    .cs-meta-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.4rem 2rem; }
+    .cs-meta-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.2rem; }
+    .cs-meta-item label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .cs-meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+
+    .sites { max-width: 980px; margin: 0 auto; padding: 1rem 2rem 0.5rem; }
+    .site-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .site-row:last-child { border-bottom: none; }
+    .site-row.flip .site-visual { order: 2; }
+    .site-browser { border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 20px 50px rgba(0,0,0,0.18); }
+    .site-browser-bar { height: 28px; background: #e5e7eb; display: flex; align-items: center; gap: 6px; padding: 0 10px; }
+    .site-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .site-url { margin-left: 8px; font-size: 0.68rem; color: #374151; background: #fff; border-radius: 6px; padding: 3px 10px; flex: 1; }
+    .site-browser img { width: 100%; height: 260px; object-fit: cover; object-position: top; display: block; }
+    .site-place { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0f766e; margin-bottom: 0.4rem; }
+    .site-text h2 { font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.5rem; }
+    .site-text p { color: #4b5563; font-size: 0.93rem; line-height: 1.6; margin-bottom: 0.4rem; }
+    .site-status { display: inline-block; font-size: 0.74rem; font-weight: 600; color: #374151; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 99px; padding: 0.25rem 0.7rem; margin: 0.4rem 0 1rem; }
+    .site-links { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .site-btn { background: #0f766e; color: #fff; padding: 0.65rem 1.3rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.86rem; transition: background 0.2s; }
+    .site-btn:hover { background: #115e59; }
+    .site-link { color: #0f766e; font-weight: 600; font-size: 0.86rem; text-decoration: none; }
+    .site-link:hover { text-decoration: underline; }
+
+    .think { background: #f8fafc; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 3.5rem 2rem; }
+    .think-inner { max-width: 980px; margin: 0 auto; }
+    .think-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0f766e; display: block; margin-bottom: 0.5rem; }
+    .think h2 { font-family: 'Sora', sans-serif; font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1.4rem; }
+    .think-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .think-card { background: #fff; border: 1px solid var(--border); border-top: 3px solid #0f766e; border-radius: 14px; padding: 1.2rem 1.3rem; }
+    .think-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .think-card p { font-size: 0.85rem; color: #4b5563; line-height: 1.55; margin-bottom: 0.5rem; }
+    .think-card p:last-child { margin-bottom: 0; }
+    .think-why { color: var(--text); }
+    .think-why strong { color: #0f766e; }
+
+    .next { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 1rem; }
+    .next h2 { font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.8rem; }
+    .next ul { list-style: none; padding: 0; margin: 0; }
+    .next li { display: flex; gap: 0.7rem; color: #374151; font-size: 0.93rem; line-height: 1.6; padding: 0.45rem 0; }
+    .next li::before { content: '→'; color: #0f766e; font-weight: 700; flex-shrink: 0; }
+
+    .cs-cta { padding: 3rem 2rem 4rem; text-align: center; }
+    .cs-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cs-btn-secondary { background: transparent; color: var(--text); border: 1.5px solid var(--border); padding: 0.75rem 1.7rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: border-color 0.2s, color 0.2s; }
+    .cs-btn-secondary:hover { border-color: #0f766e; color: #0f766e; }
+
+    @media (max-width: 780px) {
+      .site-row { grid-template-columns: 1fr; gap: 1.4rem; padding: 2.2rem 0; }
+      .site-row.flip .site-visual { order: 0; }
+      .think-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">Sarvani<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <a class="cs-back" href="index.html">← Back</a>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <span class="cs-hero-tag">✦ Initiative projects · Built with AI</span>
+    <h1>Real-business website concepts</h1>
+    <p class="cs-hero-sub">Three quick website concepts for real local businesses, built with AI from public information and pitched to each owner.</p>
+    <p class="cs-disclaimer"><strong>Unsolicited concepts, not affiliated with the businesses shown.</strong> This is not UX research.</p>
+  </section>
+
+  <!-- META BAR -->
+  <div class="cs-meta-bar">
+    <div class="cs-meta-inner">
+      <div class="cs-meta-item"><label>Role</label><span>Solo — concept, prompting, build</span></div>
+      <div class="cs-meta-item"><label>Built with</label><span>Claude Code in VS Code, from a reference template</span></div>
+      <div class="cs-meta-item"><label>Source</label><span>Public Google Maps listings</span></div>
+      <div class="cs-meta-item"><label>Status</label><span>Pitched to each owner, not adopted</span></div>
+      <div class="cs-meta-item"><label>Photos</label><span>From the concept sites, not mine. To be replaced with the owners' own or licensed images.</span></div>
+    </div>
+  </div>
+
+  <!-- THE THREE CONCEPTS -->
+  <section class="sites">
+
+    <div class="site-row">
+      <div class="site-visual">
+        <div class="site-browser">
+          <div class="site-browser-bar"><span class="site-dot" style="background:#ff5f57;"></span><span class="site-dot" style="background:#febc2e;"></span><span class="site-dot" style="background:#28c840;"></span><span class="site-url">virasat-web.vercel.app</span></div>
+          <img src="assets/virasat-hero.jpg" alt="Virasat website concept, hero screen" />
+        </div>
+      </div>
+      <div class="site-text">
+        <div class="site-place">Nizampet, Hyderabad</div>
+        <h2>Virasat — The Exotic Veg</h2>
+        <p>Pure-vegetarian restaurant, 4.6★ on Google. Concept focus: a fully priced, category-by-category menu.</p>
+        <span class="site-status">Unsolicited concept · pitched, not adopted</span>
+        <div class="site-links">
+          <a class="site-btn" href="virasat-case-study.html">Read case study →</a>
+          <a class="site-link" href="https://virasat-web.vercel.app/" target="_blank" rel="noopener">View live concept ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-row flip">
+      <div class="site-visual">
+        <div class="site-browser">
+          <div class="site-browser-bar"><span class="site-dot" style="background:#ff5f57;"></span><span class="site-dot" style="background:#febc2e;"></span><span class="site-dot" style="background:#28c840;"></span><span class="site-url">bun-wigi.vercel.app</span></div>
+          <img src="assets/bunwigi-hero-signage.png" alt="Bun-Wigi Bistro website concept, hero screen" />
+        </div>
+      </div>
+      <div class="site-text">
+        <div class="site-place">Banjara Hills, Hyderabad</div>
+        <h2>The Bun-Wigi Bistro</h2>
+        <p>Pan-Asian and continental restaurant, 4.7★ on Google. Concept focus: a 16-category menu with a Veg / Non-Veg filter.</p>
+        <span class="site-status">Unsolicited concept · pitched, not adopted</span>
+        <div class="site-links">
+          <a class="site-btn" href="bunwigi-case-study.html">Read case study →</a>
+          <a class="site-link" href="https://bun-wigi.vercel.app/" target="_blank" rel="noopener">View live concept ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-row">
+      <div class="site-visual">
+        <div class="site-browser">
+          <div class="site-browser-bar"><span class="site-dot" style="background:#ff5f57;"></span><span class="site-dot" style="background:#febc2e;"></span><span class="site-dot" style="background:#28c840;"></span><span class="site-url">floral-business-web.sarvaniyagami9.workers.dev</span></div>
+          <img src="assets/jaqueline-hero.png" alt="Jaquelines Flowers website concept, hero screen" />
+        </div>
+      </div>
+      <div class="site-text">
+        <div class="site-place">Los Angeles, CA</div>
+        <h2>Jaquelines Flowers</h2>
+        <p>Family-owned, bilingual florist, 5.0★ on Google. Concept focus: an English / Spanish switcher. Photography is stock, standing in until the owner shares their own.</p>
+        <span class="site-status">Unsolicited concept · pitched, not adopted</span>
+        <div class="site-links">
+          <a class="site-btn" href="jaqueline-case-study.html">Read case study →</a>
+          <a class="site-link" href="https://floral-business-web.sarvaniyagami9.workers.dev/" target="_blank" rel="noopener">View live concept ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- DESIGN THINKING -->
+  <section class="think">
+    <div class="think-inner">
+      <span class="think-label">Design thinking</span>
+      <h2>What I changed for the user, and why</h2>
+      <div class="think-grid">
+        <div class="think-card">
+          <h3>Menu readability</h3>
+          <p>The menu is split into categories instead of one long list or a photographed menu card: 13 priced categories (Virasat) and 16 with a Veg / Non-Veg filter (Bun-Wigi). On a 375px phone the category buttons wrap into view; nothing scrolls sideways.</p>
+          <p class="think-why"><strong>Why:</strong> people narrow down by diet, then by category, and want to see prices before deciding.</p>
+        </div>
+        <div class="think-card">
+          <h3>Order and booking actions</h3>
+          <p>Order, reserve, directions or call sit on the first phone screen of all three sites. Jaquelines also keeps a call button fixed on screen.</p>
+          <p class="think-why"><strong>Why:</strong> a hungry person on a phone wants to act in seconds. The actions hand off to what each business already runs (delivery apps, reservations, phone) rather than a new system they'd have to manage.</p>
+        </div>
+        <div class="think-card">
+          <h3>Language</h3>
+          <p>Jaquelines has an EN / ES switcher in the navigation, matching the shop's bilingual service.</p>
+          <p class="think-why"><strong>Why:</strong> the shop already serves English and Spanish speakers in person. The site shouldn't turn half of them away.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEXT -->
+  <section class="next">
+    <h2>What I'd do next</h2>
+    <ul>
+      <li>Get each owner's OK, and replace the borrowed photos and named reviews with their own or licensed material.</li>
+      <li>Test the menu and the order / booking actions with 5 real users on phones, and write up what they find.</li>
+      <li>Move the Jaquelines concept off the personal <code>workers.dev</code> address onto a clean project URL.</li>
+    </ul>
+  </section>
+
+  <div class="cs-cta">
+    <div class="cs-cta-btns">
+      <a class="cs-btn-secondary" href="index.html#projects">← Back to Work</a>
+      <a class="cs-btn-secondary" href="work.html">See all projects →</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
