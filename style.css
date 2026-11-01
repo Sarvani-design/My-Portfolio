@@ -106,6 +106,7 @@ h1.hero-name span { color: var(--accent); }
 .ig-grad     { background: linear-gradient(135deg, #F0F4FF 0%, #E8D5FF 100%); }
 .zepto-grad  { background: linear-gradient(135deg, #F5F0FF 0%, #DDD6FE 100%); }
 .terracotta-grad { background: linear-gradient(135deg, #FDECD8 0%, #F3D2B0 100%); }
+.slate-grad  { background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%); }
 
 /* ── WORK FILTER + SORT CONTROLS ── */
 .work-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
@@ -173,6 +174,29 @@ h1.hero-name span { color: var(--accent); }
 }
 .mock-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .mock-browser-screen { width: 100%; display: block; max-height: 340px; object-fit: cover; object-position: top; }
+
+/* Three-up browser thumbnails — the merged "real-business website concepts" card */
+.mock-trio { display: flex; gap: 0.6rem; width: 88%; align-items: center; justify-content: center; }
+.mock-trio-item { flex: 1; min-width: 0; border-radius: 8px; overflow: hidden; border: 2px solid rgba(0,0,0,0.15); background: #fff; box-shadow: 0 10px 24px rgba(0,0,0,0.2); }
+.mock-trio-item .mock-browser-bar { height: 14px; padding: 0 5px; gap: 3px; }
+.mock-trio-item .mock-dot { width: 4px; height: 4px; }
+.mock-trio-item img { width: 100%; height: 150px; object-fit: cover; object-position: top; display: block; }
+
+/* ── MOTION (plan §7): only where it helps, and always optional ── */
+@keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+#hero .hero-text > * { animation: fade-up 0.6s ease both; }
+#hero .hero-text > *:nth-child(2) { animation-delay: 0.06s; }
+#hero .hero-text > *:nth-child(3) { animation-delay: 0.12s; }
+#hero .hero-text > *:nth-child(4) { animation-delay: 0.18s; }
+#hero .hero-text > *:nth-child(5) { animation-delay: 0.24s; }
+#hero .hero-text > *:nth-child(6) { animation-delay: 0.3s; }
+#hero .hero-photo-wrap { animation: fade-up 0.7s ease 0.15s both; }
+.mock-phone, .mock-browser, .mock-trio { transition: transform 0.3s ease; }
+.project-card:hover .mock-phone, .project-card:hover .mock-browser, .project-card:hover .mock-trio { transform: translateY(-4px) scale(1.02); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
 
 /* Project card body */
 .project-body { padding: 1.4rem; }
