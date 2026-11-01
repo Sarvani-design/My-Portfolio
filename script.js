@@ -17,7 +17,11 @@ sections.forEach(s => observer.observe(s));
 // Work grid — filter by build method + sort by newest
 (() => {
   const grid = document.querySelector('.projects-grid');
-  if (!grid) return;
+  const controls = document.querySelector('.work-controls');
+  // Homepage shows a fixed, hand-curated set of cards with no filter/sort UI —
+  // leave it in authored order. Only work.html (which has .work-controls)
+  // gets filtering and sorting.
+  if (!grid || !controls) return;
 
   const cards = Array.from(grid.querySelectorAll('.project-card'));
   // Curated order is its own explicit ranking (data-curated), independent of
