@@ -10,9 +10,10 @@ A static HTML/CSS/JS portfolio for Sarvani Vulavalapudi (UX/Product Designer). N
 
 | File | Purpose |
 |---|---|
-| `index.html` | Homepage — hero, project grid, about/journey, experience, education, contact |
+| `index.html` | Homepage — hero, **curated** project grid (5 hand-picked cards, no filter/sort UI), about/journey, experience, education, contact |
+| `work.html` | Full project archive — **all** project cards, with the filter-pills/sort-pills UI. Linked from the homepage via the "View More Work →" button above the curated grid. |
 | `style.css` | Global tokens, nav, buttons, homepage project-card + phone-mockup component |
-| `script.js` | Minimal (15 lines), not central to the pattern |
+| `script.js` | Nav scroll-spy (all pages) + the filter/sort logic for the project grid. The filter/sort part only activates on pages that have `.work-controls` (i.e. `work.html`); everywhere else it's a no-op. |
 | `zepto-case-study.html` | Group project, interaction design, purple `#7c3aed` — **best reference for the full pattern** |
 | `airbnb-case-study.html` | Group project, hypothesis-driven UX audit, coral `#FF5A5F` |
 | `grocery-case-study.html` | Solo, metrics-led end-to-end product, green `#22c55e` |
@@ -72,11 +73,19 @@ Each case study picks ONE accent color/gradient tied to the brand or concept, th
 
 Don't reuse another project's exact class names — write a fresh `<style>` block per file, even though the *sections* it defines follow the same skeleton above.
 
+## Homepage vs. full archive
+
+`index.html`'s Work section is a **fixed, hand-curated 5-card preview** — currently 1 vibe-coded project + the 2 Figma+AI projects + 2 plain-Figma projects. It has no `.work-controls` (no filter pills, no sort pills) and script.js deliberately leaves it in authored HTML order — see the guard clause at the top of the "Work grid" IIFE in `script.js` (`if (!grid || !controls) return;`). Don't add filter/sort UI back to the homepage; that's what `work.html` is for.
+
+`work.html` holds **every** project card (all of them, including the 5 also shown on the homepage) plus the full filter-pills/sort-pills UI. It's the "see everything" page, linked from the homepage's "View More Work →" button.
+
+**When adding a new case study card, it always goes in `work.html`.** Only add it to `index.html` too if you're deliberately swapping it into the curated 5 — if so, keep the curated set balanced (roughly: 1 vibe-coded, the Figma+AI projects, a couple of plain-Figma projects) and remove one of the existing 5 to make room, rather than just growing the homepage list.
+
 ## Build-method categories (homepage filter)
 
-Every `.project-card` in `index.html` carries two data attributes that drive the homepage filter/sort bar (`.work-controls`, wired up in `script.js`):
+Every `.project-card` in `work.html` (and the 5 mirrored onto `index.html`) carries data attributes that drive the filter/sort bar (`.work-controls`, wired up in `script.js`):
 
-- `data-build` — one of three tiers: `"vibe"` (prompted directly in Claude Code, no Figma step at all — currently only Bun-Wigi), `"figma-ai"` (built in Figma but with an AI tool in the loop — Google Stitch, Figma AI Agents; these already carry the `badge-ai` badge), or `"figma"` (manual Figma/FigJam, no AI tool — the rest).
+- `data-build` — one of three tiers: `"vibe"` (prompted directly in Claude Code, no Figma step at all — currently Bun-Wigi, Jaquelines Flowers, and Virasat), `"figma-ai"` (built in Figma but with an AI tool in the loop — Google Stitch, Figma AI Agents; these already carry the `badge-ai` badge), or `"figma"` (manual Figma/FigJam, no AI tool — the rest).
 - `data-date` — an ISO date used only as an internal sort key for the "Newest first" toggle. It is never displayed in the UI, so it doesn't need to be a verified real date — just keep new projects' dates later than existing ones so they sort to the front.
 - `data-curated` — a separate numeric rank (1, 2, 3…) used only by "Curated order". **This must NOT just mirror where the card sits in the HTML.** New cards get inserted at the top of the DOM so "Newest first" looks right even before JS runs — if `data-curated` isn't set deliberately (or `curatedOrder` in `script.js` falls back to raw DOM order), "Curated order" silently becomes identical to "Newest first" and the toggle looks broken. Give new cards the next-highest `data-curated` number (i.e. append them to the end of the curated ranking) unless you actually intend to feature one early.
 
@@ -93,7 +102,7 @@ Every `.project-card` in `index.html` carries two data attributes that drive the
    - Metrics-led end-to-end product → `grocery-case-study.html`
 4. Save screenshots into `assets/` using a short project-prefix convention (e.g. `[project]-[screen-name].png`), matching the existing pattern.
 5. Update `<title>` and `<meta name="description">`, and rewrite every section per the skeleton and voice guidance above — delete the template's leading HTML comment block when done.
-6. Add a new `.project-card` block to `index.html`'s `.projects-grid`: `.mock-phone` (app) or `.mock-browser` (website) thumbnail, badges (`badge-solo` / `badge-group` / `badge-ai` / `badge-vibe` / `badge-tag`), `h3` title, italic `.card-problem` one-liner, a description paragraph, and two links ("Read Case Study →" to the new file, "View in Figma ↗" or "View Live Site ↗" to the real URL). **Also add `data-build="vibe|figma-ai|figma"` and `data-date="YYYY-MM-DD"`** to the card's outer `<div>` — see "Build-method categories" below — or it won't show up correctly in the filter/sort bar.
+6. Add a new `.project-card` block to `work.html`'s `.projects-grid`: `.mock-phone` (app) or `.mock-browser` (website) thumbnail, badges (`badge-solo` / `badge-group` / `badge-ai` / `badge-vibe` / `badge-tag`), `h3` title, italic `.card-problem` one-liner, a description paragraph, and two links ("Read Case Study →" to the new file, "View in Figma ↗" or "View Live Site ↗" to the real URL). **Also add `data-build="vibe|figma-ai|figma"`, `data-date="YYYY-MM-DD"`, and `data-curated="N"`** (next-highest number) to the card's outer `<div>` — see "Build-method categories" below — or it won't show up correctly in the filter/sort bar. Only copy the same card into `index.html` if it should replace one of the curated 5 (see "Homepage vs. full archive" above).
 7. Link the new page's nav and footer the same way the others do (`index.html#work`, `index.html#about`, etc. — confirm the exact anchor IDs in `index.html` first, they've shifted between `#work` and `#projects` historically).
 
 ## Global tokens (from `style.css`)
